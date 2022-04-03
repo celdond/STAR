@@ -11,6 +11,8 @@
     <OutputPath>.</OutputPath>
     <Name>Wishlist_Random</Name>
     <RootNamespace>Wishlist_Random</RootNamespace>
+    <InterpreterId>
+    </InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>

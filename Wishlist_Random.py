@@ -1,11 +1,10 @@
-from bs4 import BeautifulSoup
-import urllib.request
+import requests as r
+import parse as p
 
 def main():
     u = input("Paste the url of your steam wishlist\n")
-    wishlist = urllib.request.urlopen(u)
-    soup = BeautifulSoup(wishlist, 'html.parser')
-    app_ids = soup.find('"appid":')
-    print(app_ids)
+    wishlist = r.get(u)
+    l = list(p.findall('"appid":{appid},', wishlist.text))
+    print(l)
 
 main()
