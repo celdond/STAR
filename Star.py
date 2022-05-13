@@ -1,6 +1,11 @@
 import Steam
+import sqlite3 as sql3
 
 def build_user():
+    new_database = input("Please Enter A Username.\n")
+
+    conn = sql3.connect(new_database + '.db')
+    conn.close()
     return
 
 def sign_in():
@@ -18,3 +23,6 @@ def main():
         sign_in()
 
     return
+
+
+main()
