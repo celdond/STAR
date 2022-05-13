@@ -3,7 +3,7 @@ import json
 import re
 import time
 
-def main():
+def steam_scrape()->dict:
     u = input("Paste the url of your steam wishlist\n")
     wishlist_data = json.loads(re.findall(r'g_strWishlistBaseURL = (".*?");', r.get(u).text)[0])
 
@@ -20,5 +20,4 @@ def main():
         index += 1
         time.sleep(4)
 
-
-main()
+    return l
