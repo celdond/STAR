@@ -1,12 +1,8 @@
 import Steam
+import os
 import sqlite3 as sql3
 
-def setup_user_base():
-    conn = sql3.connect('user_base.db')
-
-    conn.close()
-
-def build_user():
+def build_user()->str:
     new_database = input("Please Enter A Username.\n")
     user_base = sql3.connect('user_base.db')
     cur_base = user_base.cursor()
@@ -19,11 +15,18 @@ def build_user():
     user_base.commit()
     user_base.close()
 
-    conn = sql3.connect(new_database + '.db')
+    this_dir = os.getcwd()
+    database_path = os.path.join(this_dir, "Profiles", new_database)
+    database_path = os.mkdir(database_path)
+    conn = sql3.connect(os.path.join(database_path, new_database) + '.db')
     conn.close()
-    return
+    return new_database
 
 def sign_in():
+    user_name = input("Username: \n")
+    password = input("Password: \n");
+    cwd = os.getcwd()
+    
     return
 
 def main():
