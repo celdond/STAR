@@ -10,8 +10,15 @@ def build_user()->str:
                         name text PRIMARY KEY,
                         password text,
                     ); """)
+
+    cur_base.execute("SELECT count(*) FROM users WHERE name = ?", (new_database))
+    if cursor.fetchall()[0] != 0:
+        print("Username taken.")
+        user_base.close()
+        return
+
     new_password = input("Please Add A Password.\n")
-    cur_base.execute(" INSERT INTO users(name, password) SELECT ?, ?", (new_database, new_password,))
+    cur_base.execute(" INSERT INTO users(name, password) SELECT ?, ?", (new_database, new_password))
     user_base.commit()
     user_base.close()
 
@@ -20,6 +27,7 @@ def build_user()->str:
     database_path = os.mkdir(database_path)
     conn = sql3.connect(os.path.join(database_path, new_database) + '.db')
     conn.close()
+
     return new_database
 
 def sign_in():
