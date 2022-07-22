@@ -22,8 +22,8 @@ def build_user()->str:
 
     this_dir = os.getcwd()
     database_path = os.path.join(this_dir, "Profiles", new_database)
-    database_path = os.mkdir(database_path)
-    database_path = os.path.join(database_path, new_database, '.db')
+    os.mkdir(database_path)
+    database_path = os.path.join(database_path, new_database + ".db")
     conn = sql3.connect(database_path)
     conn.close()
 
@@ -34,7 +34,8 @@ def sign_in()->str:
     password = input("Password: \n")
     user_base = sql3.connect('user_base.db')
 
-    cwd = os.getcwd()
+    this_dir = os.getcwd()
+
     user_base.close()
     return user_name
 
