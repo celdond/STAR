@@ -34,8 +34,14 @@ def sign_in()->str:
     password = input("Password: \n")
     user_base = sql3.connect('user_base.db')
 
-    this_dir = os.getcwd()
-
+    cur = user_base.cursor()
+    cur.execute("SELECT password FROM users WHERE name = ?", (user_name,))
+    data = cur.fetchall()[0]
+    if data[0] != password:
+        print("Password or User Incorrect")
+        user_base.close()
+        return '/0'
+    print("Signed In")
     user_base.close()
     return user_name
 
