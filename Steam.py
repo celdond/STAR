@@ -3,6 +3,12 @@ import json
 import re
 import time
 
+def steam_database_build()->dict:
+    return
+
+def steam_database_update(base: dict)->dict:
+    return
+
 def steam_scrape()->dict:
     u = input("Paste the url of your steam wishlist\n")
     wishlist_data = json.loads(re.findall(r'g_strWishlistBaseURL = (".*?");', r.get(u).text)[0])
