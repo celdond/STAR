@@ -57,6 +57,8 @@ def main():
     elif choice == 'R':
         sign_in()
 
+    Steam.steam_database_build()
+
     return
 
 
