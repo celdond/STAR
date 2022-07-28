@@ -62,4 +62,4 @@ def main():
     return
 
 
-main()
+Steam.steam_database_build()

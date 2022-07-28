@@ -1,15 +1,33 @@
 import requests as r
 import json
 from bs4 import BeautifulSoup
+import parse as p
 import re
 import time
 
 def steam_database_build()->dict:
     u = 'https://store.steampowered.com/search/?sort_by=Released_DESC&ignore_preferences=1'
-    req = r.get(u)
-    soup = BeautifulSoup(req.text, 'html.parser')
-    count = soup.find('div', 'search_pagination_left')
+    param = {
+        'page': 1,    
+    }
+    req = r.Session()
+    req_content = req.get(u)
+    soup = BeautifulSoup(req_content.text, 'html.parser')
+    count_section = soup.find('div', 'search_pagination_left')
+    count = p.search("of {} ", count_section.text)
+    data = []
     
+    page = 1
+    param = {
+        'page': page,    
+    }
+    req_content = req.get(u, params = param)
+    page += 1
+    soup = BeautifulSoup(req_content.text, 'html.parser')
+
+    game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
+    print(game_list)
+
     return
 
 def steam_scrape()->dict:
