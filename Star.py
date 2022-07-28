@@ -62,4 +62,4 @@ def main():
     return
 
 
-Steam.steam_database_build()
+Steam.steam_scrape()

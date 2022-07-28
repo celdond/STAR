@@ -47,4 +47,6 @@ def steam_scrape()->dict:
         index += 1
         time.sleep(4)
 
+    print(l)
+
     return l
