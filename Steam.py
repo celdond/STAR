@@ -4,8 +4,9 @@ from bs4 import BeautifulSoup
 import parse as p
 import re
 import time
+import sqlite3 as sql3
 
-def steam_database_build()->dict:
+def steam_database_build():
     u = 'https://store.steampowered.com/search/?sort_by=Released_DESC&ignore_preferences=1'
     
     req = r.Session()
@@ -13,21 +14,25 @@ def steam_database_build()->dict:
     soup = BeautifulSoup(req_content.text, 'html.parser')
     count_section = soup.find('div', 'search_pagination_left')
     count = p.search("of {} ", count_section.text)
-    data = []
     page = 1
+    logged = 0
 
-    while count > page:
+    steam_database = sql3.connect('steam_database.db')
+
+    while logged < int(count[0]):
+        print(page)
         param = {
             'page': page,    
         }
         req_content = req.get(u, params = param)
         page += 1
         soup = BeautifulSoup(req_content.text, 'html.parser')
-
+        
         game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
-        data.update(game_list)
+        for i in game_list:
+            logged += 1
 
-    return data
+    return
 
 def steam_scrape()->dict:
     u = input("Paste the url of your steam wishlist\n")
