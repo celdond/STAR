@@ -18,19 +18,31 @@ def steam_database_build():
     logged = 0
 
     steam_database = sql3.connect('steam_database.db')
+    cur_steam = steam_database.cursor()
+
+    cur_steam.execute( " CREATE TABLE IF NOT EXISTS status (latest text(255) PRIMARY KEY, latest_id int); ")
+    param = {
+            'page': page,    
+        }
+    req_content = req.get(u, params = param)
+    page += 1
+    soup = BeautifulSoup(req_content.text, 'html.parser')
+    game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
+
+    cur_steam.execute( " INSERT INTO status(latest, latest_id) SELECT ?, ?", ())
+    cur_steam.execute( " CREATE TABLE IF NOT EXISTS steam_store (app_id int PRIMARY KEY, name text(255), ); ")
 
     while logged < int(count[0]):
         print(page)
+        for i in game_list:
+            logged += 1
         param = {
             'page': page,    
         }
         req_content = req.get(u, params = param)
         page += 1
         soup = BeautifulSoup(req_content.text, 'html.parser')
-        
         game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
-        for i in game_list:
-            logged += 1
 
     return
 
