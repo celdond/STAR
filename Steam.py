@@ -25,7 +25,6 @@ def steam_database_build():
             'page': page,    
         }
     req_content = req.get(u, params = param)
-    page += 1
     soup = BeautifulSoup(req_content.text, 'html.parser')
     game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
     game_id = game_list[0]["data-ds-appid"]
@@ -38,14 +37,21 @@ def steam_database_build():
         for i in game_list:
             game_id = i["data-ds-appid"]
             game_name = i.find('div', 'col search_name ellipsis').text.strip().replace('\n', ' ')
-            game_price = i.find('div', 'col search_price responsive_secondrow').text.strip()
-            if game_price == '':
-                price = 0
+
+            try: 
+                game_price = i.find('div', 'col search_price responsive_secondrow').text.strip()
+            except Exception:
+                game_price = i.find('span', {'style': 'color: #888888;'}).text
+            if '$' in game_price:
+                price = float(game_price.replace('$', ''))
             else:
-                price = float(game_price) / 100
-            print(game_price)
-            cur_steam.execute("INSERT INTO steam_store(app_id, name, price) SELECT ?, ?, ?", (game_id, game_name, price))
-            logged += 1
+                price = 0
+            try:
+                cur_steam.execute("INSERT INTO steam_store(app_id, name, price) SELECT ?, ?, ?", (int(game_id), game_name, price))
+                logged += 1
+                print(game_name)
+            except Exception:
+                pass
         param = {
             'page': page,    
         }
