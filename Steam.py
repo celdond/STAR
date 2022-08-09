@@ -29,14 +29,22 @@ def steam_database_build():
     soup = BeautifulSoup(req_content.text, 'html.parser')
     game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
     game_id = game_list[0]["data-ds-appid"]
-    print(game_id)
     
     cur_steam.execute( " INSERT INTO status(latest, latest_id) SELECT ?, ?", ("latest", game_id,))
     cur_steam.execute( " CREATE TABLE IF NOT EXISTS steam_store (app_id int PRIMARY KEY, name text(255), price real); ")
 
     while logged < int(count[0]):
-        # print(page)
+        price = 0
         for i in game_list:
+            game_id = i["data-ds-appid"]
+            game_name = i.find('div', 'col search_name ellipsis').text.strip().replace('\n', ' ')
+            game_price = i.find('div', 'col search_price responsive_secondrow').text.strip()
+            if game_price == '':
+                price = 0
+            else:
+                price = float(game_price) / 100
+            print(game_price)
+            cur_steam.execute("INSERT INTO steam_store(app_id, name, price) SELECT ?, ?, ?", (game_id, game_name, price))
             logged += 1
         param = {
             'page': page,    
