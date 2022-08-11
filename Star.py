@@ -61,5 +61,4 @@ def main():
 
     return
 
-
 Steam.steam_database_build()

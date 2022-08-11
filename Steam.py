@@ -42,24 +42,39 @@ def steam_database_build():
                 game_price = i.find('div', 'col search_price responsive_secondrow').text.strip()
             except Exception:
                 game_price = i.find('span', {'style': 'color: #888888;'}).text
-            if '$' in game_price:
+            if 'From' in game_price:
+                price = float(game_price.replace('From $', ''))
+            elif '$' in game_price:
                 price = float(game_price.replace('$', ''))
-            else:
+            elif 'Free' in game_price:
                 price = 0
+            else:
+                price = -1.0
+
             try:
-                cur_steam.execute("INSERT INTO steam_store(app_id, name, price) SELECT ?, ?, ?", (int(game_id), game_name, price))
+                if price < 0:
+                    cur_steam.execute("INSERT INTO steam_store(app_id, name, price) SELECT ?, ?, ?", (int(game_id), game_name, 'NULL as placeholder'))
+                else:
+                    cur_steam.execute("INSERT INTO steam_store(app_id, name, price) SELECT ?, ?, ?", (int(game_id), game_name, price))
                 logged += 1
-                print(game_name)
             except Exception:
                 pass
+
+        page += 1
         param = {
             'page': page,    
         }
         req_content = req.get(u, params = param)
-        page += 1
+        while (req_content) is None:
+            req_content = req.get(u, params = param)
+        print(logged)
         soup = BeautifulSoup(req_content.text, 'html.parser')
-        game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
+        try:
+            game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
+        except Exception:
+            print(soup)
 
+    steam_database.close()
     return
 
 def steam_database_update():
