@@ -31,7 +31,7 @@ def steam_database_build():
     
     cur_steam.execute( " INSERT INTO status(latest, latest_id) SELECT ?, ?", ("latest", game_id,))
     cur_steam.execute( " CREATE TABLE IF NOT EXISTS steam_store (app_id int PRIMARY KEY, name text(255), price real); ")
-
+    print(count[0])
     while logged < int(count[0]):
         price = 0
         for i in game_list:
@@ -72,8 +72,9 @@ def steam_database_build():
         try:
             game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
         except Exception:
-            print(soup)
+            pass
 
+    steam_database.commit()
     steam_database.close()
     return
 
