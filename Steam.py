@@ -64,21 +64,23 @@ def steam_database_build():
         param = {
             'page': page,    
         }
-        req_content = req.get(u, params = param)
-        while (req_content) is None:
+        while True:
             req_content = req.get(u, params = param)
-        print(logged)
-        soup = BeautifulSoup(req_content.text, 'html.parser')
-        try:
-            game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
-        except Exception:
-            pass
+            soup = BeautifulSoup(req_content.text, 'html.parser')
+            try:
+                game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
+                print(logged)
+                break
+            except Exception:
+                print(soup)
+                break
 
     steam_database.commit()
     steam_database.close()
     return
 
 def steam_database_update():
+
     return
 
 def steam_scrape()->dict:
