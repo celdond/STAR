@@ -6,6 +6,8 @@ import re
 import time
 import sqlite3 as sql3
 
+class Final_Page(Exception): pass 
+
 def steam_database_build():
     u = 'https://store.steampowered.com/search/?sort_by=Released_DESC&ignore_preferences=1'
     
@@ -64,16 +66,19 @@ def steam_database_build():
         param = {
             'page': page,    
         }
-        while True:
-            req_content = req.get(u, params = param)
-            soup = BeautifulSoup(req_content.text, 'html.parser')
-            try:
-                game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
-                print(logged)
-                break
-            except Exception:
-                print(soup)
-                break
+        try:
+            while True:
+                req_content = req.get(u, params = param)
+                soup = BeautifulSoup(req_content.text, 'html.parser')
+                try:
+                    game_list = soup.find('div', {'id': 'search_resultsRows'}).find_all('a')
+                    print(logged)
+                    break
+                except Exception:
+                    raise Final_Page
+                    break
+        except Final_Page:
+           break
 
     steam_database.commit()
     steam_database.close()
