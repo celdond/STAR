@@ -1,6 +1,7 @@
 import Steam
 import os
 import sqlite3 as sql3
+import PySide6 as pysi
 
 def build_user()->str:
     new_database = input("Please Enter A Username.\n")
@@ -47,18 +48,6 @@ def sign_in()->str:
 
 def main():
     
-    print("Star\n")
-    print("New User - N\nReturning User - R\n")
-
-    choice = input()
-
-    if choice == 'N':
-        build_user()
-    elif choice == 'R':
-        sign_in()
-
-    Steam.steam_database_build()
+    
 
     return
-
-Steam.steam_database_build()

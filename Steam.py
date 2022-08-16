@@ -5,6 +5,7 @@ import parse as p
 import re
 import time
 import sqlite3 as sql3
+import pandas as pd
 
 class Final_Page(Exception): pass 
 
@@ -86,6 +87,15 @@ def steam_database_build():
 
 def steam_database_update():
 
+    return
+
+def steam_database_table_view():
+    pd.set_option('display.max_columns', 3)
+    steam_database = sql3.connect("steam_database.db")
+    steam_data = pd.read_sql_query("SELECT * from steam_store", steam_database)
+    print(steam_data.tail())
+
+    steam_database.close()
     return
 
 def steam_scrape()->dict:
