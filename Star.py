@@ -1,7 +1,5 @@
-import Steam
 import os
 import sqlite3 as sql3
-import PySide6 as pysi
 
 def build_user()->str:
     new_database = input("Please Enter A Username.\n")
@@ -45,9 +43,3 @@ def sign_in()->str:
     print("Signed In")
     user_base.close()
     return user_name
-
-def main():
-    
-    
-
-    return

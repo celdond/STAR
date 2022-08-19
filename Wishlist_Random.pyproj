@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a50c6016-6f9c-4aa5-a45c-b42946ae8aee</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Star.py</StartupFile>
+    <StartupFile>GUI.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GUI.py" />
     <Compile Include="Star.py" />
     <Compile Include="Steam.py" />
   </ItemGroup>
