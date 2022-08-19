@@ -1,12 +1,21 @@
 import sys
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QTabWidget, QWidget
 
 class dashboard(QMainWindow):
 
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Dashboard")
+
+        tabs = QTabWidget()
+        tabs.setTabPosition(QTabWidget.North)
+
+class wishlist_selector_page(QWidget):
+
+    def __init__(self):
+        super().__init__()
+
 
 class sign_in_window(QMainWindow):
     
@@ -19,12 +28,18 @@ class sign_in_window(QMainWindow):
         self.setCentralWidget(sign_in_button)
 
     def check_sign_in(self, checked):
-        d= dashboard()
-        d.show()
+        self.d = dashboard()
+        self.d.show()
 
-star = QApplication(sys.argv)
 
-window = sign_in_window()
-window.show()
+def main():
 
-star.exec()
+    star = QApplication(sys.argv)
+
+    window = dashboard()
+    window.show()
+
+    star.exec()
+    return
+
+main()
