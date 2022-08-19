@@ -1,4 +1,4 @@
-import os
+import sys
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
 
@@ -10,11 +10,11 @@ class sign_in_window(QMainWindow):
 
         sign_in_button = QPushButton("Sign In")
 
-        self.setCentralWidget(button)
+        self.setCentralWidget(sign_in_button)
 
 star = QApplication(sys.argv)
 
 window = sign_in_window()
 window.show()
 
-app.exec_()
+star.exec()
