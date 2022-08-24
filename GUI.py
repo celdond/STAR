@@ -5,7 +5,9 @@ from PySide6.QtWidgets import (
     QMainWindow,
     QPushButton,
     QTabWidget,
-    QWidget
+    QWidget,
+    QGridLayout,
+    QLineEdit,
 )
 
 class dashboard(QMainWindow):
@@ -17,16 +19,34 @@ class dashboard(QMainWindow):
         tabs = QTabWidget()
         tabs.setTabPosition(QTabWidget.North)
 
-        tabs.addTab(wishlist_selector_page(), "Random")
-        tabs.addTab(steam_stats_page(), "Steam")
+        tabs.addTab(home_page(), "Home")
+        tabs.addTab(steam_wishlist_page(), "Steam")
+        tabs.addTab(stats_page(), "Stats")
         self.setCentralWidget(tabs)
 
-class wishlist_selector_page(QWidget):
+class home_page(QWidget):
 
     def __init__(self):
         super().__init__()
 
-class steam_stats_page(QWidget):
+class steam_wishlist_page(QWidget):
+
+    def __init__(self):
+        super().__init__()
+
+        rand_button = QPushButton("Random")
+        rand_button.clicked.connect(self.random_button)
+        wishlist_name = QLineEdit()
+        layout = QGridLayout()
+        layout.addWidget(rand_button, 0, 1)
+        layout.addWidget(wishlist_name, 0, 0)
+
+        self.setLayout(layout)
+    
+    def random_button(self):
+        pass
+
+class stats_page(QWidget):
 
     def __init__(self):
         super().__init__()
