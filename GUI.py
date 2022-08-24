@@ -1,6 +1,12 @@
 import sys
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QTabWidget, QWidget
+from PySide6.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QPushButton,
+    QTabWidget,
+    QWidget
+)
 
 class dashboard(QMainWindow):
 
@@ -11,11 +17,19 @@ class dashboard(QMainWindow):
         tabs = QTabWidget()
         tabs.setTabPosition(QTabWidget.North)
 
+        tabs.addTab(wishlist_selector_page(), "Random")
+        tabs.addTab(steam_stats_page(), "Steam")
+        self.setCentralWidget(tabs)
+
 class wishlist_selector_page(QWidget):
 
     def __init__(self):
         super().__init__()
 
+class steam_stats_page(QWidget):
+
+    def __init__(self):
+        super().__init__()
 
 class sign_in_window(QMainWindow):
     
