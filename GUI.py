@@ -78,7 +78,9 @@ class sign_in_window(QMainWindow):
         self.d = dashboard()
         self.d.show()
 
-def fetch_profile()
+def fetch_profile():
+
+    return
 
 def main():
 
