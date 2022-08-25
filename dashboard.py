@@ -1,7 +1,9 @@
 import sys
+import profile_management
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import (
     QApplication,
+    QHBoxLayout,
     QMainWindow,
     QPushButton,
     QTabWidget,
@@ -19,7 +21,7 @@ class dashboard(QMainWindow):
         tabs = QTabWidget()
         tabs.setTabPosition(QTabWidget.North)
 
-        self.home = home_page()
+        self.window_dashboard = home_page(self)
 
         tabs.addTab(self.home, "Home")
         tabs.addTab(steam_wishlist_page(), "Steam")
@@ -28,8 +30,9 @@ class dashboard(QMainWindow):
 
 class home_page(QWidget):
 
-    def __init__(self):
+    def __init__(self, dashboard_status):
         super().__init__()
+        self.dashboard_status = dashboard_status
 
         add_button = QPushButton("Add List")
         add_button.clicked.connect(self.add_button)
@@ -72,21 +75,27 @@ class sign_in_window(QMainWindow):
 
         sign_in_button = QPushButton("Sign In")
         sign_in_button.clicked.connect(self.check_sign_in)
-        self.setCentralWidget(sign_in_button)
+        self.entered_username = QLineEdit()
+        self.entered_password = QLineEdit()
+
+        layout = QGridLayout()
+        layout.addWidget(entered_username, 0, 1)
+        layout.addWidget(entered_password, 1, 1)
+        layout.addWidget(sign_in_button, 2, 1)
+
+        page = QWidget()
+        page.setLayout(layout)
+        self.setCentralWidget(page)
 
     def check_sign_in(self, checked):
         self.d = dashboard()
         self.d.show()
 
-def fetch_profile():
-
-    return
-
 def main():
 
     star = QApplication(sys.argv)
 
-    window = dashboard()
+    window = sign_in_window()
     window.show()
 
     star.exec()
