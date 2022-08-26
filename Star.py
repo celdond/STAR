@@ -1,8 +1,7 @@
 import os
 import sqlite3 as sql3
 
-def build_user()->str:
-    new_database = input("Please Enter A Username.\n")
+def build_user(new_database: str, new_password: str)->str:
     user_base = sql3.connect('user_base.db')
     cur_base = user_base.cursor()
     cur_base.execute(""" CREATE TABLE IF NOT EXISTS users ( name text(255) PRIMARY KEY, password text(255)); """)
@@ -14,7 +13,6 @@ def build_user()->str:
         user_base.close()
         return '/0'
 
-    new_password = input("Please Add A Password.\n")
     cur_base.execute(" INSERT INTO users(name, password) SELECT ?, ?", (new_database, new_password,))
     user_base.commit()
     user_base.close()
@@ -28,7 +26,7 @@ def build_user()->str:
 
     return new_database
 
-def sign_in(user_name, password)->str:
+def sign_in(user_name: str, password: str)->str:
     user_base = sql3.connect('user_base.db')
 
     cur = user_base.cursor()
@@ -40,6 +38,6 @@ def sign_in(user_name, password)->str:
     user_base.close()
     return user_name
 
-def fetch_profile(user_name, password)->str:
+def fetch_profile(user_name: str, password: str)->str:
     s = sign_in(user_name, password)
     return s

@@ -1,5 +1,5 @@
 import sys
-from Star import fetch_profile
+import Star
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import (
     QApplication,
@@ -74,24 +74,30 @@ class sign_in_window(QMainWindow):
 
         sign_in_button = QPushButton("Sign In")
         sign_in_button.clicked.connect(self.check_sign_in)
+        profile_button = QPushButton("Create Profile")
+        profile_button.clicked.connect(self.create_profile)
         self.entered_username = QLineEdit()
         self.entered_password = QLineEdit()
 
         layout = QGridLayout()
         layout.addWidget(self.entered_username, 0, 1)
         layout.addWidget(self.entered_password, 1, 1)
-        layout.addWidget(sign_in_button, 2, 1)
+        layout.addWidget(sign_in_button, 2, 0)
+        layout.addWidget(profile_button, 2, 1)
 
         page = QWidget()
         page.setLayout(layout)
         self.setCentralWidget(page)
 
-    def check_sign_in(self, checked):
-        if fetch_profile(self.entered_username, self.entered_password) == '/0':
+    def check_sign_in(self):
+        if Star.fetch_profile(self.entered_username.text(), self.entered_password.text()) == '/0':
             return
         d = dashboard()
         d.show()
         self.close()
+
+    def create_profile(self):
+        Star.build_user(self.entered_username.text(), self.entered_password.text())
 
 def main():
 
