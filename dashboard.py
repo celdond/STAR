@@ -1,9 +1,8 @@
 import sys
-from star import fetch_profile
+from Star import fetch_profile
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import (
     QApplication,
-    QHBoxLayout,
     QMainWindow,
     QPushButton,
     QTabWidget,
