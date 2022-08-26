@@ -24,9 +24,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="dashboard.py" />
-    <Compile Include="profile_management.py" />
-    <Compile Include="Star.py" />
-    <Compile Include="Steam.py" />
+    <Compile Include="star.py" />
+    <Compile Include="steam.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Profiles\" />

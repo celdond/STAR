@@ -28,18 +28,18 @@ def build_user()->str:
 
     return new_database
 
-def sign_in()->str:
-    user_name = input("Username: \n")
-    password = input("Password: \n")
+def sign_in(user_name, password)->str:
     user_base = sql3.connect('user_base.db')
 
     cur = user_base.cursor()
     cur.execute("SELECT password FROM users WHERE name = ?", (user_name,))
     data = cur.fetchall()[0]
     if data[0] != password:
-        print("Password or User Incorrect")
         user_base.close()
         return '/0'
-    print("Signed In")
     user_base.close()
     return user_name
+
+def fetch_profile(user_name, password)->str:
+    s = sign_in(user_name, password)
+    return s
