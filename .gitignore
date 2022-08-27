@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /env
 /Profiles/Cody/Cody.db
+/user_base.db
+/Profiles/C/C.db
