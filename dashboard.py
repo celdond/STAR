@@ -10,6 +10,7 @@ from PySide6.QtWidgets import (
     QGridLayout,
     QLineEdit,
     QComboBox,
+    QHBoxLayout,
 )
 
 class dashboard(QMainWindow):
@@ -109,11 +110,42 @@ class sign_in_window(QMainWindow):
     def create_profile(self):
         Star.build_user(self.entered_username.text(), self.entered_password.text())
 
+class start_up_window(QMainWindow):
+    
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("STAR")
+
+        sign_in_button = QPushButton("Sign In")
+        guest_button = QPushButton("Guest")
+
+        sign_in_button.clicked.connect(self.open_sign_in)
+        guest_button.clicked.connect(self.open_guest)
+
+        layout = QHBoxLayout()
+        layout.addWidget(sign_in_button)
+        layout.addWidget(guest_button)
+
+        page = QWidget()
+        page.setLayout(layout)
+        self.setCentralWidget(page)
+
+    def open_sign_in(self):
+        s = sign_in_window()
+        s.show()
+        self.close()
+
+    def open_guest(self):
+        d = dashboard()
+        d.show()
+        self.close()
+
+
 def main():
 
     star = QApplication(sys.argv)
 
-    window = sign_in_window()
+    window = start_up_window()
     window.show()
 
     star.exec()
