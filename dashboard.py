@@ -10,7 +10,6 @@ from PySide6.QtWidgets import (
     QGridLayout,
     QLineEdit,
     QComboBox,
-    QHBoxLayout,
 )
 
 class dashboard(QMainWindow):
@@ -38,6 +37,9 @@ class home_page(QWidget):
         add_button = QPushButton("Add List")
         add_button.clicked.connect(self.add_button)
 
+        rand_button = QPushButton("Random")
+        rand_button.clicked.connect(self.random_button)
+
         platform_selection = QComboBox()
         platform_selection.addItems(["Steam"])
         platform_selection.currentIndexChanged.connect(self.platform_selected)
@@ -47,6 +49,7 @@ class home_page(QWidget):
         layout.addWidget(wishlist_name, 0, 0)
         layout.addWidget(add_button, 0, 1)
         layout.addWidget(platform_selection, 0, 2)
+        layout.addWidget(rand_button, 1, 1)
 
         self.setLayout(layout)
 
@@ -54,6 +57,9 @@ class home_page(QWidget):
         return
 
     def platform_selected(self, i):
+        return
+
+    def random_button(self):
         return
 
 class steam_wishlist_page(QWidget):
@@ -65,7 +71,6 @@ class steam_wishlist_page(QWidget):
         rand_button.clicked.connect(self.random_button)
         
         layout = QGridLayout()
-        layout.addWidget(rand_button, 0, 1)
 
         self.setLayout(layout)
     
@@ -87,6 +92,8 @@ class sign_in_window(QMainWindow):
         sign_in_button.clicked.connect(self.check_sign_in)
         profile_button = QPushButton("Create Profile")
         profile_button.clicked.connect(self.create_profile)
+        guest_button = QPushButton("Guest")
+        guest_button.clicked.connect(self.open_guest)
         self.entered_username = QLineEdit()
         self.entered_password = QLineEdit()
 
@@ -95,6 +102,7 @@ class sign_in_window(QMainWindow):
         layout.addWidget(self.entered_password, 1, 1)
         layout.addWidget(sign_in_button, 2, 0)
         layout.addWidget(profile_button, 2, 1)
+        layout.addWidget(guest_button, 3, 1)
 
         page = QWidget()
         page.setLayout(layout)
@@ -110,42 +118,16 @@ class sign_in_window(QMainWindow):
     def create_profile(self):
         Star.build_user(self.entered_username.text(), self.entered_password.text())
 
-class start_up_window(QMainWindow):
-    
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("STAR")
-
-        sign_in_button = QPushButton("Sign In")
-        guest_button = QPushButton("Guest")
-
-        sign_in_button.clicked.connect(self.open_sign_in)
-        guest_button.clicked.connect(self.open_guest)
-
-        layout = QHBoxLayout()
-        layout.addWidget(sign_in_button)
-        layout.addWidget(guest_button)
-
-        page = QWidget()
-        page.setLayout(layout)
-        self.setCentralWidget(page)
-
-    def open_sign_in(self):
-        s = sign_in_window()
-        s.show()
-        self.close()
-
     def open_guest(self):
         d = dashboard()
         d.show()
         self.close()
 
-
 def main():
 
     star = QApplication(sys.argv)
 
-    window = start_up_window()
+    window = sign_in_window()
     window.show()
 
     star.exec()
