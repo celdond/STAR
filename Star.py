@@ -1,4 +1,5 @@
 import os
+from os.path import exists
 import sqlite3 as sql3
 import configparser
 
@@ -19,7 +20,10 @@ def build_user(new_database: str, new_password: str)->str:
     user_base.close()
 
     this_dir = os.getcwd()
-    database_path = os.path.join(this_dir, "Profiles", new_database)
+    if exists("profiles") is not True:
+        profile_path = os.path.join(this_dir, "profiles")
+        os.mkdir(profile_path)
+    database_path = os.path.join(this_dir, "profiles", new_database)
     os.mkdir(database_path)
     database_path = os.path.join(database_path, new_database + ".db")
     conn = sql3.connect(database_path)
