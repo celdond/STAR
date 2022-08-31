@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QGridLayout,
     QLineEdit,
-    QComboBox,
+    QCheckBox,
 )
 
 class dashboard(QMainWindow):
@@ -40,23 +40,19 @@ class home_page(QWidget):
         rand_button = QPushButton("Random")
         rand_button.clicked.connect(self.random_button)
 
-        platform_selection = QComboBox()
-        platform_selection.addItems(["Steam"])
-        platform_selection.currentIndexChanged.connect(self.platform_selected)
+        self.platforms = platform_selection()
 
         wishlist_name = QLineEdit()
         layout = QGridLayout()
         layout.addWidget(wishlist_name, 0, 0)
         layout.addWidget(add_button, 0, 1)
-        layout.addWidget(platform_selection, 0, 2)
         layout.addWidget(rand_button, 1, 1)
+        layout.addWidget(self.platforms, 0, 2)
 
         self.setLayout(layout)
 
     def add_button(self):
-        return
-
-    def platform_selected(self, i):
+        
         return
 
     def random_button(self):
@@ -67,15 +63,22 @@ class steam_wishlist_page(QWidget):
     def __init__(self):
         super().__init__()
 
-        rand_button = QPushButton("Random")
-        rand_button.clicked.connect(self.random_button)
-        
         layout = QGridLayout()
 
         self.setLayout(layout)
-    
-    def random_button(self):
-        pass
+
+class platform_selection(QWidget):
+
+    def __init__(self):
+        super().__init__()
+
+        steam_check = QCheckBox("Steam")
+        steam_check.setCheckState(Qt.Unchecked)
+
+        layout = QGridLayout()
+        layout.addWidget(steam_check, 0, 0)
+
+        self.setLayout(layout)
 
 class stats_page(QWidget):
 
