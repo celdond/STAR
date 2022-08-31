@@ -26,6 +26,7 @@ def build_user(new_database: str, new_password: str)->str:
     os.mkdir(database_path)
     set = open(settings_path, 'x')
     set.close()
+    base_settings(settings_path)
     database_path = os.path.join(database_path, new_database + ".db")
     conn = sql3.connect(database_path)
     conn.close()
@@ -39,6 +40,15 @@ def base_settings(path: str):
     config.add_section('user')
 
     config['user']['steam'] = '0'
+    with open(path, 'w') as configfile:
+        config.write(configfile)
+    return
+
+def change_settings(path: str, section: str, set: str, change: list):
+    config = configparser()
+    config.read(path)
+    for x in change:
+        config.set(section, set, change)
     with open(path, 'w') as configfile:
         config.write(configfile)
     return
