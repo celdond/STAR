@@ -18,15 +18,19 @@ class dashboard(QMainWindow):
         super().__init__()
         self.setWindowTitle("Dashboard")
 
-        tabs = QTabWidget()
-        tabs.setTabPosition(QTabWidget.North)
+        self.tabs = QTabWidget()
+        self.tabs.setTabPosition(QTabWidget.North)
 
         self.home = home_page(self)
 
-        tabs.addTab(self.home, "Home")
-        #tabs.addTab(steam_wishlist_page(), "Steam")
+        self.tabs.addTab(self.home, "Home")
         #tabs.addTab(stats_page(), "Stats")
-        self.setCentralWidget(tabs)
+        self.setCentralWidget(self.tabs)
+    
+    def add_steam_tab(self):
+        steam_wishlist = steam_wishlist_page()
+        self.tabs.addTab(steam_wishlist, "Steam")
+        return
 
 class home_page(QWidget):
 
@@ -42,9 +46,9 @@ class home_page(QWidget):
 
         self.platforms = platform_selection()
 
-        wishlist_name = QLineEdit()
+        self.wishlist_name = QLineEdit()
         layout = QGridLayout()
-        layout.addWidget(wishlist_name, 0, 0)
+        layout.addWidget(self.wishlist_name, 0, 0)
         layout.addWidget(add_button, 0, 1)
         layout.addWidget(rand_button, 1, 1)
         layout.addWidget(self.platforms, 0, 2)
@@ -52,7 +56,7 @@ class home_page(QWidget):
         self.setLayout(layout)
 
     def add_button(self):
-        
+        self.dashboard_status.add_steam_tab()
         return
 
     def random_button(self):
@@ -72,11 +76,11 @@ class platform_selection(QWidget):
     def __init__(self):
         super().__init__()
 
-        steam_check = QCheckBox("Steam")
-        steam_check.setCheckState(Qt.Unchecked)
+        self.steam_check = QCheckBox("Steam")
+        self.steam_check.setCheckState(Qt.Unchecked)
 
         layout = QGridLayout()
-        layout.addWidget(steam_check, 0, 0)
+        layout.addWidget(self.steam_check, 0, 0)
 
         self.setLayout(layout)
 
