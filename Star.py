@@ -16,19 +16,22 @@ def build_user(new_database: str, new_password: str)->str:
         return '/0'
 
     cur_base.execute(" INSERT INTO users(name, password) SELECT ?, ?", (new_database, new_password,))
-    user_base.commit()
-    user_base.close()
 
     this_dir = os.getcwd()
+    profile_path = os.path.join(this_dir, "profiles")
     if exists("profiles") is not True:
-        profile_path = os.path.join(this_dir, "profiles")
         os.mkdir(profile_path)
-    database_path = os.path.join(this_dir, "profiles", new_database)
+    database_path = os.path.join(profile_path, new_database)
+    settings_path = os.path.join(database_path, 'settings.ini')
     os.mkdir(database_path)
+    set = open(settings_path, 'x')
+    set.close()
     database_path = os.path.join(database_path, new_database + ".db")
     conn = sql3.connect(database_path)
     conn.close()
 
+    user_base.commit()
+    user_base.close()
     return new_database
 
 def sign_in(user_name: str, password: str)->str:
