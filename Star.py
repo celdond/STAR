@@ -1,5 +1,6 @@
 import os
 import sqlite3 as sql3
+import configparser
 
 def build_user(new_database: str, new_password: str)->str:
     user_base = sql3.connect('user_base.db')
