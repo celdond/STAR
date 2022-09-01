@@ -1,5 +1,6 @@
 import sys
 import Star
+import os
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import (
     QApplication,
@@ -14,17 +15,17 @@ from PySide6.QtWidgets import (
 
 class dashboard(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, user):
         super().__init__()
         self.setWindowTitle("Dashboard")
+        path = os.path.join(os.getcwd(), "profiles", user)
 
         self.tabs = QTabWidget()
         self.tabs.setTabPosition(QTabWidget.North)
 
-        self.home = home_page(self)
+        self.home = home_page(self, path)
 
         self.tabs.addTab(self.home, "Home")
-        #tabs.addTab(stats_page(), "Stats")
         self.setCentralWidget(self.tabs)
     
     def add_steam_tab(self):
@@ -34,9 +35,10 @@ class dashboard(QMainWindow):
 
 class home_page(QWidget):
 
-    def __init__(self, dashboard_status):
+    def __init__(self, dashboard_status, path):
         super().__init__()
         self.dashboard_status = dashboard_status
+        self.path = path
 
         add_button = QPushButton("Add List")
         add_button.clicked.connect(self.add_button)
@@ -56,6 +58,7 @@ class home_page(QWidget):
         self.setLayout(layout)
 
     def add_button(self):
+        Star.change_setting(self.path, "user", "steam", self.wishlist_name.text())
         self.dashboard_status.add_steam_tab()
         return
 
@@ -118,7 +121,7 @@ class sign_in_window(QMainWindow):
     def check_sign_in(self):
         if Star.fetch_profile(self.entered_username.text(), self.entered_password.text()) == '/0':
             return
-        d = dashboard()
+        d = dashboard(self.entered_username.text())
         d.show()
         self.close()
 
@@ -126,7 +129,7 @@ class sign_in_window(QMainWindow):
         Star.build_user(self.entered_username.text(), self.entered_password.text())
 
     def open_guest(self):
-        d = dashboard()
+        d = dashboard('')
         d.show()
         self.close()
 

@@ -44,12 +44,17 @@ def base_settings(path: str):
         config.write(configfile)
     return
 
-def change_settings(path: str, section: str, set: str, change: list):
-    config = configparser()
-    config.read(path)
-    for x in change:
-        config.set(section, set, change)
-    with open(path, 'w') as configfile:
+def check_setting(path: str, section: str, set: str)->str:
+    config = configparser.ConfigParser()
+    config.read(os.path.join( path, "settings.ini"))
+    return
+
+def change_setting(path: str, section: str, set: str, change: str):
+    config = configparser.ConfigParser()
+    config_settings = os.path.join( path, "settings.ini")
+    config.read(config_settings)
+    config.set(section, set, change)
+    with open(config_settings, 'w') as configfile:
         config.write(configfile)
     return
 
