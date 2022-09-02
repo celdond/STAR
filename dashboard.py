@@ -63,6 +63,9 @@ class home_page(QWidget):
         return
 
     def random_button(self):
+        steam_state = self.platforms.steam_check.isChecked()
+        if steam_state:
+            steam_conn = Star.check_setting(self.path, "user", "steam")
         return
 
 class steam_wishlist_page(QWidget):

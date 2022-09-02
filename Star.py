@@ -46,8 +46,10 @@ def base_settings(path: str):
 
 def check_setting(path: str, section: str, set: str)->str:
     config = configparser.ConfigParser()
-    config.read(os.path.join( path, "settings.ini"))
-    return
+    config_settings = os.path.join( path, "settings.ini")
+    config.read(config_settings)
+    data = config[section][set]
+    return data
 
 def change_setting(path: str, section: str, set: str, change: str):
     config = configparser.ConfigParser()
