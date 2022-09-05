@@ -85,10 +85,6 @@ def steam_database_build():
     steam_database.close()
     return
 
-def steam_database_update():
-
-    return
-
 def steam_database_table_view():
     pd.set_option('display.max_columns', 3)
     steam_database = sql3.connect("steam_database.db")
@@ -98,23 +94,20 @@ def steam_database_table_view():
     steam_database.close()
     return
 
-def steam_scrape()->dict:
-    u = input("Paste the url of your steam wishlist\n")
+def steam_scrape(u: str):
     wishlist_data = json.loads(re.findall(r'g_strWishlistBaseURL = (".*?");', r.get(u).text)[0])
 
-    l = r.get(wishlist_data + 'wishlistdata/?p=0').json()
-    time.sleep(4)
-
-    index = 1
+    index = 0
     while 1:
         to_update = r.get(wishlist_data + 'wishlistdata/?p=' + str(index))
         update = to_update.json()
+        print(update)
+        break
         if not update:
             break
-        l.update(update)
         index += 1
         time.sleep(4)
 
-    print(l)
+    return
 
-    return l
+steam_scrape("https://store.steampowered.com/wishlist/profiles/76561198119466883/#sort=price")
