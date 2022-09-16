@@ -1,5 +1,6 @@
 import sys
 import Star
+import Steam
 import os
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import (
@@ -66,6 +67,7 @@ class home_page(QWidget):
         steam_state = self.platforms.steam_check.isChecked()
         if steam_state:
             steam_conn = Star.check_setting(self.path, "user", "steam")
+            Steam.steam_scrape(steam_conn)
         return
 
 class steam_wishlist_page(QWidget):

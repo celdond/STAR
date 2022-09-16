@@ -101,7 +101,8 @@ def steam_scrape(u: str):
     while 1:
         to_update = r.get(wishlist_data + 'wishlistdata/?p=' + str(index))
         update = to_update.json()
-        print(update)
+        for x in update:
+            print(update[x]['name'])
         break
         if not update:
             break
@@ -109,5 +110,3 @@ def steam_scrape(u: str):
         time.sleep(4)
 
     return
-
-steam_scrape("https://store.steampowered.com/wishlist/profiles/76561198119466883/#sort=price")
