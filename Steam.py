@@ -96,10 +96,11 @@ def steam_database_table_view():
 
 def steam_scrape(u: str):
     wishlist_data = json.loads(re.findall(r'g_strWishlistBaseURL = (".*?");', r.get(u).text)[0])
-
+    
+    req = r.Session()
     index = 0
     while 1:
-        to_update = r.get(wishlist_data + 'wishlistdata/?p=' + str(index))
+        to_update = req.get(wishlist_data + 'wishlistdata/?p=' + str(index))
         update = to_update.json()
         for x in update:
             print(update[x]['name'])
