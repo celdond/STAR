@@ -2,6 +2,7 @@ import sys
 import Star
 import Steam
 import threading
+import random_methods as r_m
 import os
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import (
@@ -73,9 +74,12 @@ class home_page(QWidget):
 
     def random_button(self):
         steam_state = self.platforms.steam_check.isChecked()
+        shuffle_list = list()
         if steam_state:
             steam_conn = Star.check_setting(self.path, "user", "steam")
             Steam.steam_scrape( self.user_database, steam_conn)
+            shuffle_list.append('steam')
+        print(r_m.random_function(self.user_database, shuffle_list))
         return
 
 class steam_wishlist_page(QWidget):
