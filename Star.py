@@ -40,6 +40,7 @@ def base_settings(path: str):
     config.add_section('user')
 
     config['user']['steam'] = '0'
+    config['steam']['wishlist_built'] = 0
     with open(path, 'w') as configfile:
         config.write(configfile)
     return
