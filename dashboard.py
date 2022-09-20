@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
     QGridLayout,
     QLineEdit,
     QCheckBox,
+    QLabel,
 )
 
 class dashboard(QMainWindow):
@@ -24,7 +25,7 @@ class dashboard(QMainWindow):
         self.tabs = QTabWidget()
         self.tabs.setTabPosition(QTabWidget.North)
 
-        self.home = home_page(self, path)
+        self.home = home_page(self, path, user)
 
         self.tabs.addTab(self.home, "Home")
         self.setCentralWidget(self.tabs)
@@ -36,11 +37,12 @@ class dashboard(QMainWindow):
 
 class home_page(QWidget):
 
-    def __init__(self, dashboard_status, path):
+    def __init__(self, dashboard_status, path, user):
         super().__init__()
         self.dashboard_status = dashboard_status
         self.path = path
-
+        self.user = user
+        self.user_database = os.path.join(path, user) + '.db'
         add_button = QPushButton("Add List")
         add_button.clicked.connect(self.add_button)
 
@@ -67,7 +69,7 @@ class home_page(QWidget):
         steam_state = self.platforms.steam_check.isChecked()
         if steam_state:
             steam_conn = Star.check_setting(self.path, "user", "steam")
-            Steam.steam_scrape(steam_conn)
+            Steam.steam_scrape( self.user_database, steam_conn)
         return
 
 class steam_wishlist_page(QWidget):
@@ -113,6 +115,8 @@ class sign_in_window(QMainWindow):
         self.entered_password = QLineEdit()
 
         layout = QGridLayout()
+        layout.addWidget(QLabel("Username"), 0, 0)
+        layout.addWidget(QLabel("Password"), 1, 0)
         layout.addWidget(self.entered_username, 0, 1)
         layout.addWidget(self.entered_password, 1, 1)
         layout.addWidget(sign_in_button, 2, 0)

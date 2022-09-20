@@ -1,5 +1,6 @@
 import requests as r
 import json
+import os
 from bs4 import BeautifulSoup
 import parse as p
 import re
@@ -56,7 +57,7 @@ def steam_database_build():
 
             try:
                 if price < 0:
-                    cur_steam.execute("INSERT INTO steam_store(app_id, name, price) SELECT ?, ?, ?", (int(game_id), game_name, 'NULL as placeholder'))
+                    cur_steam.execute("INSERT INTO steam_store(app_id, name, price) SELECT ?, ?, ?", (int(game_id), game_name, 0))
                 else:
                     cur_steam.execute("INSERT INTO steam_store(app_id, name, price) SELECT ?, ?, ?", (int(game_id), game_name, price))
                 logged += 1
@@ -85,29 +86,32 @@ def steam_database_build():
     steam_database.close()
     return
 
-def steam_database_table_view():
-    pd.set_option('display.max_columns', 3)
-    steam_database = sql3.connect("steam_database.db")
-    steam_data = pd.read_sql_query("SELECT * from steam_store", steam_database)
-    print(steam_data.tail())
-
-    steam_database.close()
-    return
-
-def steam_scrape(u: str):
+def steam_scrape( user_path: str, u: str):
     wishlist_data = json.loads(re.findall(r'g_strWishlistBaseURL = (".*?");', r.get(u).text)[0])
     
+    user_database = sql3.connect(user_path)
+    user_cursor = user_database.cursor()
+    user_cursor.execute( " CREATE TABLE IF NOT EXISTS steam (app_id int PRIMARY KEY, name text(255), price real); ")
+
     req = r.Session()
     index = 0
     while 1:
         to_update = req.get(wishlist_data + 'wishlistdata/?p=' + str(index))
         update = to_update.json()
         for x in update:
-            print(update[x]['name'])
-        break
+            app_id = p.search( "https://cdn.cloudflare.steamstatic.com/steam/apps/{}/", update[x]['capsule'])[0]
+            app_name = update[x]['name']
+            price_list = update[x]['subs']
+            if len(price_list) == 0:
+                price = 0
+            else:
+                price = price_list[0]['price']
+            user_cursor.execute("INSERT INTO steam(app_id, name, price) SELECT ?, ?, ?", (int(app_id), app_name, price))
         if not update:
             break
         index += 1
-        time.sleep(4)
+        time.sleep(2)
 
+    user_database.commit()
+    user_database.close()
     return
