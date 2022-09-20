@@ -106,7 +106,7 @@ def steam_scrape( user_path: str, u: str):
                 price = 0
             else:
                 price = price_list[0]['price']
-            user_cursor.execute("INSERT INTO steam(app_id, name, price) SELECT ?, ?, ?", (int(app_id), app_name, price))
+            user_cursor.execute("INSERT OR REPLACE INTO steam(app_id, name, price) SELECT ?, ?, ?", (int(app_id), app_name, price))
         if not update:
             break
         index += 1

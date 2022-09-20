@@ -1,6 +1,7 @@
 import sys
 import Star
 import Steam
+import threading
 import os
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import (
@@ -47,7 +48,7 @@ class home_page(QWidget):
         add_button.clicked.connect(self.add_button)
 
         rand_button = QPushButton("Random")
-        rand_button.clicked.connect(self.random_button)
+        rand_button.clicked.connect(self.random_button_thread)
 
         self.platforms = platform_selection()
 
@@ -63,6 +64,11 @@ class home_page(QWidget):
     def add_button(self):
         Star.change_setting(self.path, "user", "steam", self.wishlist_name.text())
         self.dashboard_status.add_steam_tab()
+        return
+
+    def random_button_thread(self):
+        button_thread = threading.Thread(target = self.random_button)
+        button_thread.start()
         return
 
     def random_button(self):
