@@ -119,8 +119,6 @@ class sign_in_window(QMainWindow):
         sign_in_button.clicked.connect(self.check_sign_in)
         profile_button = QPushButton("Create Profile")
         profile_button.clicked.connect(self.create_profile)
-        guest_button = QPushButton("Guest")
-        guest_button.clicked.connect(self.open_guest)
         self.entered_username = QLineEdit()
         self.entered_password = QLineEdit()
 
@@ -129,9 +127,8 @@ class sign_in_window(QMainWindow):
         layout.addWidget(QLabel("Password"), 1, 0)
         layout.addWidget(self.entered_username, 0, 1)
         layout.addWidget(self.entered_password, 1, 1)
-        layout.addWidget(sign_in_button, 2, 0)
-        layout.addWidget(profile_button, 2, 1)
-        layout.addWidget(guest_button, 3, 1)
+        layout.addWidget(sign_in_button, 2, 1)
+        layout.addWidget(profile_button, 2, 0)
 
         page = QWidget()
         page.setLayout(layout)
@@ -145,12 +142,9 @@ class sign_in_window(QMainWindow):
         self.close()
 
     def create_profile(self):
+        if '/' or '.' in self.entered_username.text():
+            return
         Star.build_user(self.entered_username.text(), self.entered_password.text())
-
-    def open_guest(self):
-        d = dashboard('')
-        d.show()
-        self.close()
 
 def main():
 
