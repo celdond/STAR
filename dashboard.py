@@ -137,6 +137,8 @@ class sign_in_window(QMainWindow):
 
     def check_sign_in(self):
         if Star.fetch_profile(self.entered_username.text(), self.entered_password.text()) == '/0':
+            fail_dialogue = dialogues.sign_in_failure_dialogue("Username or password is incorrect.")
+            fail_dialogue.exec()
             return
         d = dashboard(self.entered_username.text())
         d.show()
