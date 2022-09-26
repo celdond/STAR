@@ -11,12 +11,15 @@ class sign_in_failure_dialogue(QDialog):
 
         self.setWindowTitle("Failure")
 
-        ok_button = QDialogButtonBox.Close
-
-        self.buttonBox = QDialogButtonBox(ok_button)
+        buttons = QDialogButtonBox(self)
+        buttons.addButton("Ok", QDialogButtonBox.AcceptRole)
+        buttons.accepted.connect(self.window_close)
 
         self.layout = QVBoxLayout()
         response = QLabel(message)
         self.layout.addWidget(response)
-        self.layout.addWidget(self.buttonBox)
+        self.layout.addWidget(buttons)
         self.setLayout(self.layout)
+    
+    def window_close(self):
+        self.close()
