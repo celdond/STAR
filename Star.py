@@ -65,6 +65,11 @@ def sign_in(user_name: str, password: str)->str:
     user_base = sql3.connect('user_base.db')
 
     cur = user_base.cursor()
+    cur.execute("SELECT count(*) FROM users WHERE name = ?", (user_name,))
+    data = cur.fetchall()[0]
+    if data[0] != 1:
+        user_base.close()
+        return '/0'
     cur.execute("SELECT password FROM users WHERE name = ?", (user_name,))
     data = cur.fetchall()[0]
     if data[0] != password:
