@@ -4,6 +4,7 @@ import Steam
 import threading
 import random_methods as r_m
 import os
+import dialogues
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import (
     QApplication,
