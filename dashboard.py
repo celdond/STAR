@@ -145,9 +145,17 @@ class sign_in_window(QMainWindow):
         self.close()
 
     def create_profile(self):
-        if '/' or '.' in self.entered_username.text():
+        if '/' in self.entered_username.text():
+            print(self.entered_username.text())
+            illegal_dialogue = dialogues.sign_in_failure_dialogue("Character '/' is not allowed.")
+            illegal_dialogue.exec()
             return
-        Star.build_user(self.entered_username.text(), self.entered_password.text())
+        taken = Star.build_user(self.entered_username.text(), self.entered_password.text())
+
+        if taken == '/0':
+            fail_dialogue = dialogues.sign_in_failure_dialogue("Username taken.")
+            fail_dialogue.exec()
+            return
 
 def main():
 
