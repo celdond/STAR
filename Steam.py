@@ -91,7 +91,7 @@ def steam_scrape( user_path: str, u: str):
     
     user_database = sql3.connect(user_path)
     user_cursor = user_database.cursor()
-    user_cursor.execute( " CREATE TABLE IF NOT EXISTS steam (app_id int PRIMARY KEY, name text(255), price real); ")
+    user_cursor.execute( " CREATE TABLE IF NOT EXISTS steam (app_id int PRIMARY KEY, name text(255), type text(255), price real); ")
 
     req = r.Session()
     index = 0
@@ -101,12 +101,13 @@ def steam_scrape( user_path: str, u: str):
         for x in update:
             app_id = p.search( "https://cdn.cloudflare.steamstatic.com/steam/apps/{}/", update[x]['capsule'])[0]
             app_name = update[x]['name']
+            app_type = update[x]['type']
             price_list = update[x]['subs']
             if len(price_list) == 0:
                 price = 0
             else:
                 price = price_list[0]['price']
-            user_cursor.execute("INSERT OR REPLACE INTO steam(app_id, name, price) SELECT ?, ?, ?", (int(app_id), app_name, price))
+            user_cursor.execute("INSERT OR REPLACE INTO steam(app_id, name, type, price) SELECT ?, ?, ?, ?", (int(app_id), app_name, app_type, price))
         if not update:
             break
         index += 1
