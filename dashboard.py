@@ -146,7 +146,7 @@ class sign_in_window(QMainWindow):
 
     def check_sign_in(self):
         if Star.fetch_profile(self.entered_username.text(), self.entered_password.text()) == '/0':
-            fail_dialogue = dialogues.sign_in_failure_dialogue("Username or password is incorrect.")
+            fail_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Username or password is incorrect.")
             fail_dialogue.exec()
             return
         d = dashboard(self.entered_username.text())
@@ -156,7 +156,7 @@ class sign_in_window(QMainWindow):
     def create_profile(self):
         if '/' in self.entered_username.text():
             print(self.entered_username.text())
-            illegal_dialogue = dialogues.sign_in_failure_dialogue("Character '/' is not allowed.")
+            illegal_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Character '/' is not allowed.")
             illegal_dialogue.exec()
             return
         taken = Star.build_user(self.entered_username.text(), self.entered_password.text())
@@ -165,6 +165,10 @@ class sign_in_window(QMainWindow):
             fail_dialogue = dialogues.sign_in_failure_dialogue("Username taken.")
             fail_dialogue.exec()
             return
+        
+        legal_dialogue = dialogues.sign_in_failure_dialogue("Profile Created", "Profile Successfully Created!")
+        legal_dialogue.exec()
+        return
 
 def main():
 

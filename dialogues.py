@@ -6,10 +6,10 @@ from PySide6.QtWidgets import (
 )
 
 class sign_in_failure_dialogue(QDialog):
-    def __init__(self, message: str):
+    def __init__(self, title: str, message: str):
         super().__init__()
 
-        self.setWindowTitle("Failure")
+        self.setWindowTitle(title)
 
         buttons = QDialogButtonBox(self)
         buttons.addButton("Ok", QDialogButtonBox.AcceptRole)
