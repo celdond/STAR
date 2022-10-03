@@ -23,19 +23,24 @@ class dashboard(QMainWindow):
     def __init__(self, user):
         super().__init__()
         self.setWindowTitle("Dashboard")
-        path = os.path.join(os.getcwd(), "profiles", user)
+        self.user = user
+        self.path = os.path.join(os.getcwd(), "profiles", user)
 
-        self.tabs = QTabWidget()
-        self.tabs.setTabPosition(QTabWidget.North)
+        self.load_settings()
 
-        self.home = home_page(self, path, user)
-
-        self.tabs.addTab(self.home, "Home")
-        self.setCentralWidget(self.tabs)
-    
     def add_steam_tab(self):
         steam_wishlist = steam_wishlist_page()
         self.tabs.addTab(steam_wishlist, "Steam")
+        return
+
+    def load_settings(self):
+        self.tabs = QTabWidget()
+        self.tabs.setTabPosition(QTabWidget.North)
+        self.home = home_page(self, self.path, self.user)
+
+        self.tabs.addTab(self.home, "Home")
+        self.setCentralWidget(self.tabs)
+
         return
 
 class home_page(QWidget):

@@ -81,3 +81,13 @@ def sign_in(user_name: str, password: str)->str:
 def fetch_profile(user_name: str, password: str)->str:
     s = sign_in(user_name, password)
     return s
+
+def load_window_settings(path: str)->list:
+    output = list()
+    config = configparser.ConfigParser()
+    config_settings = os.path.join(path, "settings.ini")
+    config.read(config_settings)
+    if config['user']['steam'] != '0':
+        output.append('s')
+    
+    return output
