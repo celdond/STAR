@@ -41,6 +41,10 @@ class dashboard(QMainWindow):
         self.tabs.addTab(self.home, "Home")
         self.setCentralWidget(self.tabs)
 
+        to_add = Star.load_window_settings(self.path)
+        for x in to_add:
+            if x == 's':
+                self.add_steam_tab()
         return
 
 class home_page(QWidget):
