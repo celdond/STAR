@@ -95,6 +95,6 @@ def load_window_settings(path: str)->list:
 def load_database_external(path: str, username: str, table: str):
     database_path = os.path.join(path, username + '.db')
     database = sql3.connect(database_path)
-    data_table = pd.read_sql_table(table, database)
+    data_table = pd.read_sql('SELECT * FROM ' + table, database)
     database.close()
     return data_table

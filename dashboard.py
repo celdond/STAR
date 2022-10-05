@@ -19,13 +19,31 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QCheckBox,
     QLabel,
+    QTableView,
 )
 
 class wishlist_view(QAbstractTableModel):
 
-    def __init__(self, platform: str, path: str, username: str):
-        super().__init__()
+    def __init__(self, data, parent = None):
+        super().__init__(parent)
+        self._data = data
+
+    def rowCount(self, parent = None):
+        return self._data.shape[0]
         
+    def columnCount(self, parent = None):
+        return self._data.shape[1]
+
+    def data(self, index, role = Qt.DisplayRole):
+        if index.isValid():
+            if role == Qt.DisplayRole:
+                return str(self._data.iloc[index.row(), index.column()])
+        return None
+
+    def headerData(self, col, orientation, role):
+        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
+            return self._data.columns[col]
+        return None
 
 class dashboard(QMainWindow):
 
@@ -38,7 +56,7 @@ class dashboard(QMainWindow):
         self.load_settings()
 
     def add_steam_tab(self):
-        steam_wishlist = steam_wishlist_page()
+        steam_wishlist = steam_wishlist_page(self.path, self.user)
         self.tabs.addTab(steam_wishlist, "Steam")
         return
 
@@ -103,12 +121,15 @@ class home_page(QWidget):
 
 class steam_wishlist_page(QWidget):
 
-    def __init__(self):
+    def __init__(self, path: str, user: str):
         super().__init__()
 
-
-
+        data = Star.load_database_external(path, user, 'steam')
+        self.pandas_model = wishlist_view(data)
+        table = QTableView()
+        table.setModel(self.pandas_model)
         layout = QGridLayout()
+        layout.addWidget(table, 0, 0)
 
         self.setLayout(layout)
 
