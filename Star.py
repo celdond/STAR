@@ -2,6 +2,7 @@ import os
 from os.path import exists
 import sqlite3 as sql3
 import configparser
+import pandas as pd
 
 def build_user(new_database: str, new_password: str)->str:
     user_base = sql3.connect('user_base.db')
@@ -90,3 +91,10 @@ def load_window_settings(path: str)->list:
         output.append('s')
     
     return output
+
+def load_database_external(path: str, username: str, table: str):
+    database_path = os.path.join(path, username + '.db')
+    database = sql3.connect(database_path)
+    data_table = pd.read_sql_table(table, database)
+    database.close()
+    return data_table

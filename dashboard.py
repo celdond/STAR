@@ -5,7 +5,10 @@ import threading
 import random_methods as r_m
 import os
 import dialogues
-from PySide6.QtCore import QSize, Qt
+from PySide6.QtCore import (
+    Qt,
+    QAbstractTableModel,
+)
 from PySide6.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -17,6 +20,12 @@ from PySide6.QtWidgets import (
     QCheckBox,
     QLabel,
 )
+
+class wishlist_view(QAbstractTableModel):
+
+    def __init__(self, platform: str, path: str, username: str):
+        super().__init__()
+        
 
 class dashboard(QMainWindow):
 
@@ -96,6 +105,8 @@ class steam_wishlist_page(QWidget):
 
     def __init__(self):
         super().__init__()
+
+
 
         layout = QGridLayout()
 
