@@ -8,6 +8,7 @@ import time
 import sqlite3 as sql3
 import pandas as pd
 from selenium.webdriver import Chrome
+
 from selenium.webdriver.common.by import By
 
 class Final_Page(Exception): pass 
@@ -91,14 +92,21 @@ def steam_database_build():
 def gog_database_build():
     u = 'https://www.gog.com/en/games?page=1'
 
+    gog_database = sql3.connect('gog_database.db')
+    cur_steam = gog_database.cursor()
+
+    cur_steam.execute( " CREATE TABLE IF NOT EXISTS status (latest text(255) PRIMARY KEY, latest_id int); ")
+
     driver = Chrome(executable_path='/Applications/driver/chromedriver') 
 
     driver.get(u)
 
     soup = BeautifulSoup(driver.page_source, 'lxml')
-    game_list = soup.find('product-tile')
+    game_list = soup.find_all('product-tile')
     print(game_list)
     driver.quit()
+    gog_database.commit()
+    gog_database.close()
     return
 
 def steam_scrape(user_path: str, u: str):
