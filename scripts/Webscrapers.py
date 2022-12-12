@@ -7,6 +7,8 @@ import re
 import time
 import sqlite3 as sql3
 import pandas as pd
+from selenium.webdriver import Chrome
+from selenium.webdriver.common.by import By
 
 class Final_Page(Exception): pass 
 
@@ -86,7 +88,20 @@ def steam_database_build():
     steam_database.close()
     return
 
-def steam_scrape( user_path: str, u: str):
+def gog_database_build():
+    u = 'https://www.gog.com/en/games?page=1'
+
+    driver = Chrome(executable_path='/Applications/driver/chromedriver') 
+
+    driver.get(u)
+
+    soup = BeautifulSoup(driver.page_source, 'lxml')
+    game_list = soup.find('product-tile')
+    print(game_list)
+    driver.quit()
+    return
+
+def steam_scrape(user_path: str, u: str):
     wishlist_data = json.loads(re.findall(r'g_strWishlistBaseURL = (".*?");', r.get(u).text)[0])
     
     user_database = sql3.connect(user_path)
