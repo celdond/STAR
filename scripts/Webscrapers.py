@@ -96,10 +96,10 @@ def gog_database_build():
     gog_database = sql3.connect('gog_database.db')
     cur_steam = gog_database.cursor()
 
-    cur_steam.execute( " CREATE TABLE IF NOT EXISTS status (latest text(255) PRIMARY KEY, latest_id int); ")
+    cur_steam.execute(" CREATE TABLE IF NOT EXISTS gog_store (app_id int PRIMARY KEY, name text(255), price real); ")
 
     driver = Chrome(executable_path='/Applications/driver/chromedriver')
-    page = 1
+    page = 50
 
     while(1):
         u = url + '?page=' + str(page)
@@ -112,9 +112,15 @@ def gog_database_build():
             break
 
         for game in game_list:
+            price = '0'
             title = game.find('div', {'class': 'product-tile__title'})
-            price = game.find('product-price')
-            print(title.text, price.text)
+            price_seek = game.find('span', {'class': 'final-value'})
+            if not price_seek:
+                if (game.find('span', {'selenium-id': 'productPriceFreeLabel'})):
+                    price = '0'
+            else:
+                price = price_seek.text
+            print(title.text.strip().replace('\n', ' '), price)
         
         page += 1
         time.sleep(randrange(3, 6))
