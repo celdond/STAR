@@ -7,6 +7,7 @@ import re
 import time
 import sqlite3 as sql3
 import pandas as pd
+from random import randrange
 from selenium.webdriver import Chrome
 
 from selenium.webdriver.common.by import By
@@ -90,20 +91,35 @@ def steam_database_build():
     return
 
 def gog_database_build():
-    u = 'https://www.gog.com/en/games?page=1'
+    url = 'https://www.gog.com/en/games'
 
     gog_database = sql3.connect('gog_database.db')
     cur_steam = gog_database.cursor()
 
     cur_steam.execute( " CREATE TABLE IF NOT EXISTS status (latest text(255) PRIMARY KEY, latest_id int); ")
 
-    driver = Chrome(executable_path='/Applications/driver/chromedriver') 
+    driver = Chrome(executable_path='/Applications/driver/chromedriver')
+    page = 1
 
-    driver.get(u)
+    while(1):
+        u = url + '?page=' + str(page)
+        driver.get(u)
 
-    soup = BeautifulSoup(driver.page_source, 'lxml')
-    game_list = soup.find_all('product-tile')
-    print(game_list)
+        soup = BeautifulSoup(driver.page_source, 'lxml')
+        game_list = soup.find_all('product-tile')
+
+        if not len(game_list):
+            break
+
+        for game in game_list:
+            title = game.find('div', {'class': 'product-tile__title'})
+            price = game.find('product-price')
+            print(title.text, price.text)
+        
+        page += 1
+        time.sleep(randrange(3, 6))
+
+
     driver.quit()
     gog_database.commit()
     gog_database.close()
