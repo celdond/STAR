@@ -25,7 +25,7 @@ def steam_database_build():
     page = 1
     logged = 0
 
-    steam_database = sql3.connect('steam_database.db')
+    steam_database = sql3.connect('store_database.db')
     cur_steam = steam_database.cursor()
 
     cur_steam.execute( " CREATE TABLE IF NOT EXISTS status (latest text(255) PRIMARY KEY, latest_id int); ")
@@ -93,10 +93,10 @@ def steam_database_build():
 def gog_database_build():
     url = 'https://www.gog.com/en/games'
 
-    gog_database = sql3.connect('gog_database.db')
-    cur_steam = gog_database.cursor()
+    gog_database = sql3.connect('store_database.db')
+    cur_gog = gog_database.cursor()
 
-    cur_steam.execute(" CREATE TABLE IF NOT EXISTS gog_store (app_id int PRIMARY KEY, name text(255), price real); ")
+    cur_gog.execute(" CREATE TABLE IF NOT EXISTS gog_store (name text(255) PRIMARY KEY, price real);")
 
     driver = Chrome(executable_path='/Applications/driver/chromedriver')
     page = 50
@@ -112,15 +112,15 @@ def gog_database_build():
             break
 
         for game in game_list:
-            price = '0'
+            price = '0.00'
             title = game.find('div', {'class': 'product-tile__title'})
             price_seek = game.find('span', {'class': 'final-value'})
             if not price_seek:
                 if (game.find('span', {'selenium-id': 'productPriceFreeLabel'})):
-                    price = '0'
+                    price = '0.00'
             else:
                 price = price_seek.text
-            print(title.text.strip().replace('\n', ' '), price)
+            cur_gog.execute("INSERT INTO steam_store(app_id, name, price) SELECT ?, ?, ?", (title.text.strip().replace('\n', ' '), float(price)))
         
         page += 1
         time.sleep(randrange(3, 6))
