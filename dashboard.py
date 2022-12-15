@@ -1,8 +1,8 @@
 import sys
 import Star
-import Steam
+import scripts.Webscrapers
 import threading
-import random_methods as r_m
+import scripts.random_methods as r_m
 import os
 import dialogues
 from PySide6.QtCore import (
@@ -114,7 +114,7 @@ class home_page(QWidget):
         shuffle_list = list()
         if steam_state:
             steam_conn = Star.check_setting(self.path, "user", "steam")
-            Steam.steam_scrape( self.user_database, steam_conn)
+            scripts.Webscrapers.steam_scrape( self.user_database, steam_conn)
             shuffle_list.append('steam')
         print(r_m.random_function(self.user_database, shuffle_list))
         return
