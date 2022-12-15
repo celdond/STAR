@@ -4,7 +4,7 @@ import scripts.Webscrapers
 import threading
 import scripts.random_methods as r_m
 import os
-import dialogues
+import gui.dialogues as dialogues
 from PySide6.QtCore import (
     Qt,
     QAbstractTableModel,
