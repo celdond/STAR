@@ -364,9 +364,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /env
-/Profiles/Cody/Cody.db
+/source/profiles
 /user_base.db
-/Profiles/C/C.db
-profiles/C/settings.ini
-profiles/K/K.db
-profiles/K/settings.ini
