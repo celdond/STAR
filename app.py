@@ -1,12 +1,12 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
 
-class dashboard(Widget):
+class Dashboard(Widget):
     pass
 
-class star_app(App):
+class StarApp(App):
     def build(self):
-        return dashboard()
+        return Dashboard()
     
 if __name__ == '__main__':
-    star_app().run()
+    StarApp().run()
