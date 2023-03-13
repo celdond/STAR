@@ -4,7 +4,6 @@ import source.webscrapers as scrapers
 import threading
 import source.random_methods as r_m
 import os
-import source.gui.dialogues as dialogues
 from PySide6.QtCore import (
     Qt,
     QAbstractTableModel,
@@ -18,7 +17,6 @@ from PySide6.QtWidgets import (
     QGridLayout,
     QLineEdit,
     QCheckBox,
-    QLabel,
     QTableView,
 )
 
@@ -47,11 +45,10 @@ class wishlist_view(QAbstractTableModel):
 
 class dashboard(QMainWindow):
 
-    def __init__(self, user):
+    def __init__(self):
         super().__init__()
         self.setWindowTitle("Dashboard")
-        self.user = user
-        self.path = os.path.join(os.getcwd(), "profiles", user)
+        # self.path = os.path.join(os.getcwd(), "profiles", user)
 
         self.load_settings()
 
@@ -63,25 +60,18 @@ class dashboard(QMainWindow):
     def load_settings(self):
         self.tabs = QTabWidget()
         self.tabs.setTabPosition(QTabWidget.North)
-        self.home = home_page(self, self.path, self.user)
+        self.home = home_page(self)
 
         self.tabs.addTab(self.home, "Home")
         self.setCentralWidget(self.tabs)
 
-        to_add = userbase.load_window_settings(self.path)
-        for x in to_add:
-            if x == 's':
-                self.add_steam_tab()
         return
 
 class home_page(QWidget):
 
-    def __init__(self, dashboard_status, path, user):
+    def __init__(self, dashboard_status):
         super().__init__()
         self.dashboard_status = dashboard_status
-        self.path = path
-        self.user = user
-        self.user_database = os.path.join(path, user) + '.db'
         add_button = QPushButton("Add List")
         add_button.clicked.connect(self.add_button)
 
@@ -141,8 +131,12 @@ class platform_selection(QWidget):
         self.steam_check = QCheckBox("Steam")
         self.steam_check.setCheckState(Qt.Unchecked)
 
+        self.gog_check = QCheckBox("GOG")
+        self.gog_check.setCheckState(Qt.Unchecked)
+
         layout = QGridLayout()
         layout.addWidget(self.steam_check, 0, 0)
+        layout.addWidget(self.gog_check, 0, 1)
 
         self.setLayout(layout)
 
@@ -150,57 +144,6 @@ class stats_page(QWidget):
 
     def __init__(self):
         super().__init__()
-
-class sign_in_window(QWidget):
-    
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("STAR")
-
-        sign_in_button = QPushButton("Sign In")
-        sign_in_button.clicked.connect(self.check_sign_in)
-        profile_button = QPushButton("Create Profile")
-        profile_button.clicked.connect(self.create_profile)
-        self.entered_username = QLineEdit()
-        self.entered_password = QLineEdit()
-
-        layout = QGridLayout()
-        layout.addWidget(QLabel("Username"), 0, 0)
-        layout.addWidget(QLabel("Password"), 1, 0)
-        layout.addWidget(self.entered_username, 0, 1)
-        layout.addWidget(self.entered_password, 1, 1)
-        layout.addWidget(sign_in_button, 2, 1)
-        layout.addWidget(profile_button, 2, 0)
-
-        page = QWidget()
-        page.setLayout(layout)
-        self.setCentralWidget(page)
-
-    def check_sign_in(self):
-        if userbase.fetch_profile(self.entered_username.text(), self.entered_password.text()) == '/0':
-            fail_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Username or password is incorrect.")
-            fail_dialogue.exec()
-            return
-        d = dashboard(self.entered_username.text())
-        d.show()
-        self.close()
-
-    def create_profile(self):
-        if '/' in self.entered_username.text():
-            print(self.entered_username.text())
-            illegal_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Character '/' is not allowed.")
-            illegal_dialogue.exec()
-            return
-        taken = Star.build_user(self.entered_username.text(), self.entered_password.text())
-
-        if taken == '/0':
-            fail_dialogue = dialogues.sign_in_failure_dialogue("Username taken.")
-            fail_dialogue.exec()
-            return
-        
-        legal_dialogue = dialogues.sign_in_failure_dialogue("Profile Created", "Profile Successfully Created!")
-        legal_dialogue.exec()
-        return
 
 def main():
 
