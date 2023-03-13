@@ -1,10 +1,10 @@
 import sys
-import Star
-import scripts.Webscrapers
+import source.userbase as userbase
+import source.webscrapers as scrapers
 import threading
-import scripts.random_methods as r_m
+import source.random_methods as r_m
 import os
-import gui.dialogues as dialogues
+import source.gui.dialogues as dialogues
 from PySide6.QtCore import (
     Qt,
     QAbstractTableModel,
@@ -68,7 +68,7 @@ class dashboard(QMainWindow):
         self.tabs.addTab(self.home, "Home")
         self.setCentralWidget(self.tabs)
 
-        to_add = Star.load_window_settings(self.path)
+        to_add = userbase.load_window_settings(self.path)
         for x in to_add:
             if x == 's':
                 self.add_steam_tab()
@@ -100,7 +100,7 @@ class home_page(QWidget):
         self.setLayout(layout)
 
     def add_button(self):
-        Star.change_setting(self.path, "user", "steam", self.wishlist_name.text())
+        userbase.change_setting(self.path, "user", "steam", self.wishlist_name.text())
         self.dashboard_status.add_steam_tab()
         return
 
@@ -113,8 +113,8 @@ class home_page(QWidget):
         steam_state = self.platforms.steam_check.isChecked()
         shuffle_list = list()
         if steam_state:
-            steam_conn = Star.check_setting(self.path, "user", "steam")
-            scripts.Webscrapers.steam_scrape( self.user_database, steam_conn)
+            steam_conn = userbase.check_setting(self.path, "user", "steam")
+            scrapers.steam_scrape( self.user_database, steam_conn)
             shuffle_list.append('steam')
         print(r_m.random_function(self.user_database, shuffle_list))
         return
@@ -124,7 +124,7 @@ class steam_wishlist_page(QWidget):
     def __init__(self, path: str, user: str):
         super().__init__()
 
-        data = Star.load_database_external(path, user, 'steam')
+        data = userbase.load_database_external(path, user, 'steam')
         self.pandas_model = wishlist_view(data)
         table = QTableView()
         table.setModel(self.pandas_model)
@@ -177,7 +177,7 @@ class sign_in_window(QWidget):
         self.setCentralWidget(page)
 
     def check_sign_in(self):
-        if Star.fetch_profile(self.entered_username.text(), self.entered_password.text()) == '/0':
+        if userbase.fetch_profile(self.entered_username.text(), self.entered_password.text()) == '/0':
             fail_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Username or password is incorrect.")
             fail_dialogue.exec()
             return
