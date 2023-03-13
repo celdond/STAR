@@ -151,7 +151,7 @@ class stats_page(QWidget):
     def __init__(self):
         super().__init__()
 
-class sign_in_window(QMainWindow):
+class sign_in_window(QWidget):
     
     def __init__(self):
         super().__init__()
@@ -206,7 +206,7 @@ def main():
 
     star = QApplication(sys.argv)
 
-    window = sign_in_window()
+    window = dashboard()
     window.show()
 
     star.exec()
