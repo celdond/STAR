@@ -9,7 +9,6 @@ from PySide6.QtCore import (
 from PySide6.QtWidgets import (
     QPushButton,
     QTabWidget,
-    QToolBar,
     QWidget,
     QGridLayout,
     QLineEdit,
@@ -22,19 +21,19 @@ class home_page(QWidget):
     def __init__(self, dashboard_status):
         super().__init__()
         self.dashboard_status = dashboard_status
-        add_button = QPushButton("Add List")
-        add_button.clicked.connect(self.add_button)
+        # add_button = QPushButton("Add List")
+        # add_button.clicked.connect(self.add_button)
 
         rand_button = QPushButton("Random")
         rand_button.clicked.connect(self.random_button_thread)
 
         self.platforms = platform_selection()
 
-        self.wishlist_name = QLineEdit()
+        # self.wishlist_name = QLineEdit()
         layout = QGridLayout()
-        layout.addWidget(self.wishlist_name, 0, 0)
-        layout.addWidget(add_button, 0, 1)
-        layout.addWidget(rand_button, 1, 1)
+        # layout.addWidget(self.wishlist_name, 0, 0)
+        # layout.addWidget(add_button, 0, 1)
+        layout.addWidget(rand_button, 0, 1)
         layout.addWidget(self.platforms, 0, 2)
 
         self.setLayout(layout)
@@ -86,7 +85,7 @@ class platform_selection(QWidget):
 
         layout = QGridLayout()
         layout.addWidget(self.steam_check, 0, 0)
-        layout.addWidget(self.gog_check, 0, 1)
+        layout.addWidget(self.gog_check, 1, 0)
 
         self.setLayout(layout)
 

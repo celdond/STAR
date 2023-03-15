@@ -1,5 +1,5 @@
 import sys
-import source.gui.dash as dash
+import source.gui.home as home
 from PySide6.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -18,10 +18,11 @@ class dashboard(QMainWindow):
     def load_settings(self):
         self.tabs = QTabWidget()
         self.tabs.setTabPosition(QTabWidget.North)
-        self.home = dash.home_page(self)
+        self.home = home.home_page(self)
 
-        toolbar = dash.home_bar()
-        self.addToolBar(toolbar)
+        menu = self.menuBar()
+        profile_menu = menu.addMenu("&Profile")
+        profile_menu.addSeparator()
 
         self.tabs.addTab(self.home, "Home")
         self.setCentralWidget(self.tabs)
