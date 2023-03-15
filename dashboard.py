@@ -20,6 +20,9 @@ class dashboard(QMainWindow):
         self.tabs.setTabPosition(QTabWidget.North)
         self.home = dash.home_page(self)
 
+        toolbar = dash.home_bar()
+        self.addToolBar(toolbar)
+
         self.tabs.addTab(self.home, "Home")
         self.setCentralWidget(self.tabs)
 
