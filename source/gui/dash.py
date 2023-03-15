@@ -117,8 +117,3 @@ class wishlist_view(QAbstractTableModel):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return self._data.columns[col]
         return None
-    
-class home_bar(QToolBar):
-
-    def __init__(self):
-        super().__init__()
