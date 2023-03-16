@@ -18,17 +18,22 @@ class dashboard(QMainWindow):
 
         self.load_settings()
 
+    def log_in(self):
+        self.profile_menu.removeAction(self.set_profile)
+        return
+
     def load_settings(self):
         self.tabs = QTabWidget()
         self.tabs.setTabPosition(QTabWidget.North)
         self.home = home.home_page(self)
 
-        set_profile = QAction("Log In", self)
+        self.set_profile = QAction("Log In", self)
+        self.set_profile.triggered.connect(self.log_in)
 
         menu = self.menuBar()
-        profile_menu = menu.addMenu("&Profile")
-        profile_menu.addSeparator()
-        profile_menu.addAction(set_profile)
+        self.profile_menu = menu.addMenu("&Profile")
+        self.profile_menu.addSeparator()
+        self.profile_menu.addAction(self.set_profile)
 
         self.tabs.addTab(self.home, "Home")
         self.setCentralWidget(self.tabs)
