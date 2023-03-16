@@ -1,5 +1,8 @@
 import sys
 import source.gui.home as home
+from PySide6.QtGui import (
+    QAction,
+)
 from PySide6.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -20,9 +23,12 @@ class dashboard(QMainWindow):
         self.tabs.setTabPosition(QTabWidget.North)
         self.home = home.home_page(self)
 
+        set_profile = QAction("Log In", self)
+
         menu = self.menuBar()
         profile_menu = menu.addMenu("&Profile")
         profile_menu.addSeparator()
+        profile_menu.addAction(set_profile)
 
         self.tabs.addTab(self.home, "Home")
         self.setCentralWidget(self.tabs)
