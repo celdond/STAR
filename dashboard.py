@@ -1,5 +1,6 @@
 import sys
 import source.gui.home as home
+import source.gui.profile as profile
 from PySide6.QtGui import (
     QAction,
 )
@@ -13,13 +14,16 @@ class dashboard(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.profile_selection = None
         self.setWindowTitle("Dashboard")
         # self.path = os.path.join(os.getcwd(), "profiles", user)
 
         self.load_settings()
 
     def log_in(self):
-        self.profile_menu.removeAction(self.set_profile)
+        if self.profile_selection is None:
+            self.profile_selection = profile.profile_window()
+        self.profile_selection.show()
         return
 
     def load_settings(self):
