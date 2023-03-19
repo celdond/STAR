@@ -22,7 +22,7 @@ class dashboard(QMainWindow):
 
     def log_in(self):
         if self.profile_selection is None:
-            self.profile_selection = profile.profile_window()
+            self.profile_selection = profile.profile_window(self)
         self.profile_selection.show()
         return
 
@@ -30,6 +30,7 @@ class dashboard(QMainWindow):
         self.tabs = QTabWidget()
         self.tabs.setTabPosition(QTabWidget.North)
         self.home = home.home_page(self)
+        self.creation = profile.create_profile(self)
 
         self.set_profile = QAction("Log In", self)
         self.set_profile.triggered.connect(self.log_in)
