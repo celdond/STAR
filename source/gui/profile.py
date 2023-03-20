@@ -63,4 +63,5 @@ class create_profile(QWidget):
         
         legal_dialogue = dialogues.sign_in_failure_dialogue("Profile Created", "Profile Successfully Created!")
         legal_dialogue.exec()
+        self.dashboard_status.profile_menu.addAction(self.dashboard_status.clear_profile)
         return

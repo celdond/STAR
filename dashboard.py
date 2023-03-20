@@ -23,6 +23,9 @@ class dashboard(QMainWindow):
     def log_in(self):
         self.profile_selection.show()
         return
+    
+    def log_out(self):
+        return
 
     def load_settings(self):
         self.tabs = QTabWidget()
@@ -33,6 +36,8 @@ class dashboard(QMainWindow):
 
         self.set_profile = QAction("Log In", self)
         self.set_profile.triggered.connect(self.log_in)
+        self.clear_profile = QAction("Sign Out", self)
+        self.clear_profile.triggered.connect(self.log_out)
 
         menu = self.menuBar()
         self.profile_menu = menu.addMenu("&Profile")
