@@ -27,7 +27,7 @@ class profile_window(QWidget):
 
     def open_create_window(self):
         self.dashboard_status.creation.show()
-        self.close()
+        self.hide()
 
 class create_profile(QWidget):
 
