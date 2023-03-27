@@ -33,6 +33,7 @@ class dashboard(QMainWindow):
         self.home = home.home_page(self)
         self.profile_selection = profile.profile_window(self)
         self.creation = profile.create_profile(self)
+        self.selecton = profile.select_profile(self)
 
         self.set_profile = QAction("Log In", self)
         self.set_profile.triggered.connect(self.log_in)
