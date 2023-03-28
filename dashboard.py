@@ -23,6 +23,9 @@ class dashboard(QMainWindow):
         self.setCentralWidget(self.tabs)
         self.profile_selection = profile.profile_window(self)
 
+        menu = self.menuBar()
+        self.profile_menu = menu.addMenu("&Profile")
+
         self.load_settings()
 
     def log_in(self):
@@ -31,11 +34,16 @@ class dashboard(QMainWindow):
     
     def log_out(self):
         self.profile_selection = None
+        self.clear_dashboard()
+        self.load_settings()
         return
     
     def clear_dashboard(self):
         for i in reversed(range(self.tabs.count()-1)):
             self.tabs.childAt(i).deleteLater()
+
+        self.profile_menu.clear()
+        return
 
     def load_settings(self):
         self.home = home.home_page(self)
@@ -45,11 +53,10 @@ class dashboard(QMainWindow):
         self.clear_profile = QAction("Sign Out", self)
         self.clear_profile.triggered.connect(self.log_out)
 
-        menu = self.menuBar()
-        self.profile_menu = menu.addMenu("&Profile")
         self.profile_menu.addSeparator()
         self.profile_menu.addAction(self.set_profile)
-        self.profile_menu.addAction(self.clear_profile)
+        if self.profile_selection != None:
+            self.profile_menu.addAction(self.clear_profile)
 
         self.tabs.addTab(self.home, "Home")
 
