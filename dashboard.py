@@ -1,5 +1,5 @@
 import sys
-import source.gui.home as home
+import source.gui.random_selection as random_selection
 import source.gui.profile as profile
 from PySide6.QtGui import (
     QAction,
@@ -46,7 +46,7 @@ class dashboard(QMainWindow):
         return
 
     def load_settings(self):
-        self.home = home.home_page(self)
+        self.random = random_selection.random_page(self)
 
         self.set_profile = QAction("Select Profile", self)
         self.set_profile.triggered.connect(self.log_in)

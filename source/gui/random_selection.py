@@ -16,7 +16,7 @@ from PySide6.QtWidgets import (
     QTableView,
 )
 
-class home_page(QWidget):
+class random_page(QWidget):
 
     def __init__(self, dashboard_status):
         super().__init__()
