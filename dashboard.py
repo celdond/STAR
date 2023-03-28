@@ -25,6 +25,7 @@ class dashboard(QMainWindow):
         return
     
     def log_out(self):
+        self.profile_selection = None
         return
 
     def load_settings(self):
@@ -42,6 +43,7 @@ class dashboard(QMainWindow):
         self.profile_menu = menu.addMenu("&Profile")
         self.profile_menu.addSeparator()
         self.profile_menu.addAction(self.set_profile)
+        self.profile_menu.addAction(self.clear_profile)
 
         self.tabs.addTab(self.home, "Home")
         self.setCentralWidget(self.tabs)

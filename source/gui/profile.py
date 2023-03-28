@@ -45,12 +45,15 @@ class profile_window(QWidget):
         
         legal_dialogue = dialogues.sign_in_failure_dialogue("Profile Created", "Profile Successfully Created!")
         legal_dialogue.exec()
-        self.dashboard_status.profile_menu.addAction(self.dashboard_status.clear_profile)
+        self.hide()
+        self.dashboard_status.profile_selection = taken
         return
     
     def check_sign_in(self):
-        if userbase.fetch_profile(self.entered_username.text(), self.entered_password.text()) == '/0':
+        user = userbase.fetch_profile(self.entered_username.text(), self.entered_password.text())
+        if user == '/0':
             fail_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Username or password is incorrect.")
             fail_dialogue.exec()
             return
         self.hide()
+        self.dashboard_status.profile_selection = user
