@@ -53,4 +53,4 @@ class profile_window(QWidget):
             fail_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Username or password is incorrect.")
             fail_dialogue.exec()
             return
-        self.close()
+        self.hide()
