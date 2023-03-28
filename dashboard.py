@@ -18,6 +18,11 @@ class dashboard(QMainWindow):
         self.setWindowTitle("Dashboard")
         # self.path = os.path.join(os.getcwd(), "profiles", user)
 
+        self.tabs = QTabWidget()
+        self.tabs.setTabPosition(QTabWidget.North)
+        self.setCentralWidget(self.tabs)
+        self.profile_selection = profile.profile_window(self)
+
         self.load_settings()
 
     def log_in(self):
@@ -27,12 +32,13 @@ class dashboard(QMainWindow):
     def log_out(self):
         self.profile_selection = None
         return
+    
+    def clear_dashboard(self):
+        for i in reversed(range(self.tabs.count()-1)):
+            self.tabs.childAt(i).deleteLater()
 
     def load_settings(self):
-        self.tabs = QTabWidget()
-        self.tabs.setTabPosition(QTabWidget.North)
         self.home = home.home_page(self)
-        self.profile_selection = profile.profile_window(self)
 
         self.set_profile = QAction("Select Profile", self)
         self.set_profile.triggered.connect(self.log_in)
@@ -46,7 +52,6 @@ class dashboard(QMainWindow):
         self.profile_menu.addAction(self.clear_profile)
 
         self.tabs.addTab(self.home, "Home")
-        self.setCentralWidget(self.tabs)
 
         return
 
