@@ -33,7 +33,7 @@ class dashboard(QMainWindow):
         self.home = home.home_page(self)
         self.profile_selection = profile.profile_window(self)
 
-        self.set_profile = QAction("Log In", self)
+        self.set_profile = QAction("Select Profile", self)
         self.set_profile.triggered.connect(self.log_in)
         self.clear_profile = QAction("Sign Out", self)
         self.clear_profile.triggered.connect(self.log_out)
