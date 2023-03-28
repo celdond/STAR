@@ -23,6 +23,11 @@ class dashboard(QMainWindow):
         self.setCentralWidget(self.tabs)
         self.profile_selection = profile.profile_window(self)
 
+        self.set_profile = QAction("Select Profile", self)
+        self.set_profile.triggered.connect(self.log_in)
+        self.clear_profile = QAction("Sign Out", self)
+        self.clear_profile.triggered.connect(self.log_out)
+
         menu = self.menuBar()
         self.profile_menu = menu.addMenu("&Profile")
 
@@ -47,11 +52,6 @@ class dashboard(QMainWindow):
 
     def load_settings(self):
         self.random = random_selection.random_page(self)
-
-        self.set_profile = QAction("Select Profile", self)
-        self.set_profile.triggered.connect(self.log_in)
-        self.clear_profile = QAction("Sign Out", self)
-        self.clear_profile.triggered.connect(self.log_out)
 
         self.profile_menu.addSeparator()
         self.profile_menu.addAction(self.set_profile)
