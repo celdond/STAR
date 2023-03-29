@@ -17,7 +17,9 @@ class dashboard(QMainWindow):
         self.profile_selection = None
         self.setWindowTitle("Dashboard")
         # self.path = os.path.join(os.getcwd(), "profiles", user)
+        self._generate_UI()
 
+    def _generate_UI(self):
         self.tabs = QTabWidget()
         self.tabs.setTabPosition(QTabWidget.North)
         self.setCentralWidget(self.tabs)
@@ -58,7 +60,7 @@ class dashboard(QMainWindow):
         if self.profile_selection != None:
             self.profile_menu.addAction(self.clear_profile)
 
-        self.tabs.addTab(self.home, "Home")
+        self.tabs.addTab(self.random, "Random")
 
         return
 
