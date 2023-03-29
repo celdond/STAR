@@ -1,4 +1,4 @@
-import source.userbase as userbase
+import source.database as database
 import source.components.dialogues as dialogues
 from PySide6.QtWidgets import (
     QPushButton,
@@ -36,7 +36,7 @@ class profile_window(QWidget):
             illegal_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Character '/' is not allowed.")
             illegal_dialogue.exec()
             return
-        taken = userbase.build_user(self.entered_username.text(), self.entered_password.text())
+        taken = database.build_user(self.entered_username.text(), self.entered_password.text())
 
         if taken == '/0':
             fail_dialogue = dialogues.sign_in_failure_dialogue("Name taken.")
@@ -51,7 +51,7 @@ class profile_window(QWidget):
         return
     
     def check_sign_in(self):
-        user = userbase.fetch_profile(self.entered_username.text(), self.entered_password.text())
+        user = database.fetch_profile(self.entered_username.text(), self.entered_password.text())
         if user == '/0':
             fail_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Username or password is incorrect.")
             fail_dialogue.exec()

@@ -1,4 +1,4 @@
-import source.userbase as userbase
+import source.database as database
 import source.scripts.webscrapers as scrapers
 import threading
 import source.scripts.random_methods as r_m
@@ -21,27 +21,18 @@ class random_page(QWidget):
     def __init__(self, dashboard_status):
         super().__init__()
         self.dashboard_status = dashboard_status
-        # add_button = QPushButton("Add List")
-        # add_button.clicked.connect(self.add_button)
 
         rand_button = QPushButton("Random")
         rand_button.clicked.connect(self.random_button_thread)
 
         self.platforms = platform_selection()
 
-        # self.wishlist_name = QLineEdit()
         layout = QGridLayout()
-        # layout.addWidget(self.wishlist_name, 0, 0)
-        # layout.addWidget(add_button, 0, 1)
+
         layout.addWidget(rand_button, 0, 1)
         layout.addWidget(self.platforms, 0, 2)
 
         self.setLayout(layout)
-
-    def add_button(self):
-        userbase.change_setting(self.path, "user", "steam", self.wishlist_name.text())
-        self.dashboard_status.add_steam_tab()
-        return
 
     def random_button_thread(self):
         button_thread = threading.Thread(target = self.random_button)
@@ -52,7 +43,7 @@ class random_page(QWidget):
         steam_state = self.platforms.steam_check.isChecked()
         shuffle_list = list()
         if steam_state:
-            steam_conn = userbase.check_setting(self.path, "user", "steam")
+            steam_conn = database.check_setting(self.path, "user", "steam")
             scrapers.steam_scrape( self.user_database, steam_conn)
             shuffle_list.append('steam')
         print(r_m.random_function(self.user_database, shuffle_list))
@@ -63,7 +54,7 @@ class steam_wishlist_page(QWidget):
     def __init__(self, path: str, user: str):
         super().__init__()
 
-        data = userbase.load_database_external(path, user, 'steam')
+        data = database.load_database_external(path, user, 'steam')
         self.pandas_model = wishlist_view(data)
         table = QTableView()
         table.setModel(self.pandas_model)
