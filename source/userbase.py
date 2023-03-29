@@ -1,7 +1,7 @@
 import os
 from os.path import exists
 import sqlite3 as sql3
-import configparser
+import settings
 import pandas as pd
 
 def build_user(new_database: str, new_password: str)->str:
@@ -27,7 +27,7 @@ def build_user(new_database: str, new_password: str)->str:
     os.mkdir(database_path)
     set = open(settings_path, 'x')
     set.close()
-    base_settings(settings_path)
+    settings.base_settings(settings_path)
     database_path = os.path.join(database_path, new_database + ".db")
     conn = sql3.connect(database_path)
     conn.close()
@@ -35,31 +35,6 @@ def build_user(new_database: str, new_password: str)->str:
     user_base.commit()
     user_base.close()
     return new_database
-
-def base_settings(path: str):
-    config = configparser.ConfigParser()
-    config.add_section('user')
-
-    config['user']['steam'] = '0'
-    with open(path, 'w') as configfile:
-        config.write(configfile)
-    return
-
-def check_setting(path: str, section: str, set: str)->str:
-    config = configparser.ConfigParser()
-    config_settings = os.path.join( path, "settings.ini")
-    config.read(config_settings)
-    data = config[section][set]
-    return data
-
-def change_setting(path: str, section: str, set: str, change: str):
-    config = configparser.ConfigParser()
-    config_settings = os.path.join( path, "settings.ini")
-    config.read(config_settings)
-    config.set(section, set, change)
-    with open(config_settings, 'w') as configfile:
-        config.write(configfile)
-    return
 
 def sign_in(user_name: str, password: str)->str:
     user_base = sql3.connect('user_base.db')
@@ -81,16 +56,6 @@ def sign_in(user_name: str, password: str)->str:
 def fetch_profile(user_name: str, password: str)->str:
     s = sign_in(user_name, password)
     return s
-
-def load_window_settings(path: str)->list:
-    output = list()
-    config = configparser.ConfigParser()
-    config_settings = os.path.join(path, "settings.ini")
-    config.read(config_settings)
-    if config['user']['steam'] != '0':
-        output.append('s')
-    
-    return output
 
 def load_database_external(path: str, username: str, table: str):
     database_path = os.path.join(path, username + '.db')
