@@ -45,9 +45,9 @@ class profile_window(QWidget):
         
         legal_dialogue = dialogues.sign_in_failure_dialogue("Profile Created", "Profile Successfully Created!")
         legal_dialogue.exec()
-        self.hide()
-        self.dashboard_status.profile_selection = taken
+        self.dashboard_status.current_profile = taken
         self.dashboard_status.profile_change()
+        self.hide()
         return
     
     def check_sign_in(self):
@@ -56,6 +56,7 @@ class profile_window(QWidget):
             fail_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Username or password is incorrect.")
             fail_dialogue.exec()
             return
-        self.hide()
-        self.dashboard_status.profile_selection = user
+        self.dashboard_status.current_profile = user
         self.dashboard_status.profile_change()
+        self.hide()
+        return

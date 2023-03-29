@@ -14,7 +14,7 @@ class dashboard(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.profile_selection = None
+        self.current_profile = None
         self.setWindowTitle("Dashboard")
         # self.path = os.path.join(os.getcwd(), "profiles", user)
         self._generate_UI()
@@ -45,7 +45,7 @@ class dashboard(QMainWindow):
         return
     
     def log_out(self):
-        self.profile_selection = None
+        self.current_profile = None
         self.profile_change()
         return
     
@@ -63,7 +63,7 @@ class dashboard(QMainWindow):
 
         self.profile_menu.addSeparator()
         self.profile_menu.addAction(self.set_profile)
-        if self.profile_selection is None:
+        if self.current_profile is not None:
             self.profile_menu.addAction(self.clear_profile)
 
         self.tabs.addTab(self.random, "Random")
