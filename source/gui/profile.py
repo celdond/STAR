@@ -47,6 +47,7 @@ class profile_window(QWidget):
         legal_dialogue.exec()
         self.hide()
         self.dashboard_status.profile_selection = taken
+        self.dashboard_status.profile_change()
         return
     
     def check_sign_in(self):
@@ -57,3 +58,4 @@ class profile_window(QWidget):
             return
         self.hide()
         self.dashboard_status.profile_selection = user
+        self.dashboard_status.profile_change()

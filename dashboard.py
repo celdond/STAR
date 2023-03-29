@@ -35,14 +35,18 @@ class dashboard(QMainWindow):
 
         self.load_settings()
 
+    def profile_change(self):
+        self.clear_dashboard()
+        self.load_settings()
+        return
+
     def log_in(self):
         self.profile_selection.show()
         return
     
     def log_out(self):
         self.profile_selection = None
-        self.clear_dashboard()
-        self.load_settings()
+        self.profile_change()
         return
     
     def clear_dashboard(self):
