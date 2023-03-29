@@ -1,6 +1,7 @@
 import sys
 import source.gui.random_selection as random_selection
 import source.gui.profile as profile
+import os
 from PySide6.QtGui import (
     QAction,
 )
@@ -15,8 +16,8 @@ class dashboard(QMainWindow):
     def __init__(self):
         super().__init__()
         self.current_profile = None
+        self.path = None
         self.setWindowTitle("Dashboard")
-        # self.path = os.path.join(os.getcwd(), "profiles", user)
         self._generate_UI()
 
     def _generate_UI(self):
@@ -46,6 +47,7 @@ class dashboard(QMainWindow):
     
     def log_out(self):
         self.current_profile = None
+        self.path = None
         self.profile_change()
         return
     
@@ -65,6 +67,7 @@ class dashboard(QMainWindow):
         self.profile_menu.addAction(self.set_profile)
         if self.current_profile is not None:
             self.profile_menu.addAction(self.clear_profile)
+            self.path = os.path.join(os.getcwd(), "profiles", self.current_profile)
 
         self.tabs.addTab(self.random, "Random")
 
