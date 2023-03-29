@@ -1,6 +1,7 @@
 import sys
 import source.components.random_selection as random_selection
 import source.components.profile as profile
+import source.components.platforms as platforms
 import os
 from PySide6.QtGui import (
     QAction,
@@ -25,6 +26,7 @@ class dashboard(QMainWindow):
         self.tabs.setTabPosition(QTabWidget.North)
         self.setCentralWidget(self.tabs)
         self.profile_selection = profile.profile_window(self)
+        self.add_platform = platforms.platforms_window(self)
 
         self.set_profile = QAction("Select Profile", self)
         self.set_profile.triggered.connect(self.log_in)

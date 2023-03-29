@@ -1,4 +1,3 @@
-import source.database as database
 import source.scripts.webscrapers as scrapers
 import threading
 from PySide6.QtWidgets import (
@@ -16,11 +15,10 @@ class home_page(QWidget):
         add_button.clicked.connect(self.add_button)
 
         layout = QGridLayout()
-        layout.addWidget(add_button, 0, 1)
+        layout.addWidget(add_button, 0, 0)
 
         self.setLayout(layout)
 
     def add_button(self):
-        database.change_setting(self.path, "user", "steam", self.wishlist_name.text())
-        self.dashboard_status.add_steam_tab()
+        self.dashboard_status.add_platform.show()
         return
