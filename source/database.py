@@ -1,7 +1,7 @@
 import os
 from os.path import exists
 import sqlite3 as sql3
-import settings
+import source.settings as settings
 import pandas as pd
 
 def build_user(new_database: str, new_password: str)->str:

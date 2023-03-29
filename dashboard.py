@@ -69,8 +69,8 @@ class dashboard(QMainWindow):
         self.profile_menu.addSeparator()
         self.profile_menu.addAction(self.set_profile)
         if self.current_profile is not None:
-            home = home.home_page()
-            self.tabs.addTab(home, "Home")
+            profile_home = home.home_page(self)
+            self.tabs.addTab(profile_home, "Home")
             self.profile_menu.addAction(self.clear_profile)
             self.path = os.path.join(os.getcwd(), "profiles", self.current_profile)
 

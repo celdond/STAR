@@ -19,7 +19,7 @@ class platforms_window(QWidget):
         add_button = QPushButton("Add Platform")
         add_button.clicked.connect(self.add)
 
-        platform_selection.currentTextChanged.connect(self.platform_changed)
+        platform_selection.currentTextChanged.connect(self.platform_change)
 
         layout = QGridLayout()
         layout.addWidget(platform_selection, 0, 0)
@@ -31,5 +31,5 @@ class platforms_window(QWidget):
         self.platform = s
         return
     
-    def add():
+    def add(self):
         return
