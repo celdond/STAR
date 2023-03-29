@@ -12,14 +12,14 @@ def base_settings(path: str):
 
 def check_setting(path: str, section: str, set: str)->str:
     config = configparser.ConfigParser()
-    config_settings = os.path.join( path, "settings.ini")
+    config_settings = os.path.join(path, "settings.ini")
     config.read(config_settings)
     data = config[section][set]
     return data
 
 def change_setting(path: str, section: str, set: str, change: str):
     config = configparser.ConfigParser()
-    config_settings = os.path.join( path, "settings.ini")
+    config_settings = os.path.join(path, "settings.ini")
     config.read(config_settings)
     config.set(section, set, change)
     with open(config_settings, 'w') as configfile:
