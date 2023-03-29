@@ -1,5 +1,5 @@
 import source.userbase as userbase
-import source.gui.dialogues as dialogues
+import source.components.dialogues as dialogues
 from PySide6.QtWidgets import (
     QPushButton,
     QWidget,

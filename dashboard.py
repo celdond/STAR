@@ -1,6 +1,6 @@
 import sys
-import source.gui.random_selection as random_selection
-import source.gui.profile as profile
+import source.components.random_selection as random_selection
+import source.components.profile as profile
 import os
 from PySide6.QtGui import (
     QAction,

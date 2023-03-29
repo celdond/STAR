@@ -1,7 +1,7 @@
 import source.userbase as userbase
-import source.webscrapers as scrapers
+import source.scripts.webscrapers as scrapers
 import threading
-import source.random_methods as r_m
+import source.scripts.random_methods as r_m
 from PySide6.QtCore import (
     Qt,
     QAbstractTableModel,
