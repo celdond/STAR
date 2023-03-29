@@ -2,6 +2,7 @@ import sys
 import source.components.random_selection as random_selection
 import source.components.profile as profile
 import source.components.platforms as platforms
+import source.components.home as home
 import os
 from PySide6.QtGui import (
     QAction,
@@ -68,6 +69,8 @@ class dashboard(QMainWindow):
         self.profile_menu.addSeparator()
         self.profile_menu.addAction(self.set_profile)
         if self.current_profile is not None:
+            home = home.home_page()
+            self.tabs.addTab(home, "Home")
             self.profile_menu.addAction(self.clear_profile)
             self.path = os.path.join(os.getcwd(), "profiles", self.current_profile)
 
