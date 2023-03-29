@@ -15,13 +15,21 @@ class platforms_window(QWidget):
         self.platform = None
         platform_selection = QComboBox()
         platform_selection.addItems(["None", "Steam"])
+        self.entered_path = QLineEdit()
+        add_button = QPushButton("Add Platform")
+        add_button.clicked.connect(self.add)
 
         platform_selection.currentTextChanged.connect(self.platform_changed)
 
         layout = QGridLayout()
         layout.addWidget(platform_selection, 0, 0)
+        layout.addWidget(self.entered_path, 1, 0)
+        layout.addWidget(add_button, 2, 0)
         self.setLayout(layout)
 
     def platform_change(self, s):
         self.platform = s
+        return
+    
+    def add():
         return
