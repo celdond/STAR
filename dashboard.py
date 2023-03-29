@@ -50,8 +50,10 @@ class dashboard(QMainWindow):
         return
     
     def clear_dashboard(self):
-        for i in reversed(range(self.tabs.count()-1)):
-            self.tabs.childAt(i).deleteLater()
+        for i in reversed(range(self.tabs.count())):
+            t = self.tabs.widget(i)
+            self.tabs.removeTab(i)
+            t.deleteLater()
 
         self.profile_menu.clear()
         return
@@ -61,7 +63,7 @@ class dashboard(QMainWindow):
 
         self.profile_menu.addSeparator()
         self.profile_menu.addAction(self.set_profile)
-        if self.profile_selection != None:
+        if self.profile_selection is None:
             self.profile_menu.addAction(self.clear_profile)
 
         self.tabs.addTab(self.random, "Random")
