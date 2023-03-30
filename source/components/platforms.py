@@ -51,7 +51,7 @@ class platforms_window(QWidget):
             return
         check_platform = settings.check_setting(self.dashboard_status.path, 'User', self.platform)
         if check_platform != '0' and self.replace_platform.checkState() == Qt.Unchecked:
-            platform_dialogue = dialogues.alert_dialogue("Platform Exists", "Select Replace Path checkbox in form above to replace the current platform path.")
+            platform_dialogue = dialogues.alert_dialogue("Platform Exists", "Check Replace in form above to replace the current platform path.")
             platform_dialogue.exec()
             return
         settings.change_setting(self.dashboard_status.path, 'User', self.platform, self.entered_path.text())
