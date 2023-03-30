@@ -1,3 +1,4 @@
+import source.components.dialogues as dialogues
 from PySide6.QtWidgets import (
     QComboBox,
     QPushButton,
@@ -12,7 +13,7 @@ class platforms_window(QWidget):
     def __init__(self, dashboard_status):
         super().__init__()
         self.dashboard_status = dashboard_status
-        self.platform = None
+        self.platform = "None"
         platform_selection = QComboBox()
         platform_selection.addItems(["None", "Steam"])
         self.entered_path = QLineEdit()
@@ -32,4 +33,12 @@ class platforms_window(QWidget):
         return
     
     def add(self):
+        if self.platform == None:
+            platform_dialogue = dialogues.alert_dialogue("Platform Unselected", "Please select a platform to add.")
+            platform_dialogue.exec()
+            return
+        if len(self.entered_path) == 0:
+            platform_dialogue = dialogues.alert_dialogue("Path Unspecified", "Please provide the path to the wishlist.")
+            platform_dialogue.exec()
+            return
         return
