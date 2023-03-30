@@ -33,17 +33,17 @@ class profile_window(QWidget):
 
     def create(self):
         if '/' in self.entered_username.text():
-            illegal_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Character '/' is not allowed.")
+            illegal_dialogue = dialogues.alert_dialogue("Failure", "Character '/' is not allowed.")
             illegal_dialogue.exec()
             return
         taken = database.build_user(self.entered_username.text(), self.entered_password.text())
 
         if taken == '/0':
-            fail_dialogue = dialogues.sign_in_failure_dialogue("Name taken.")
+            fail_dialogue = dialogues.alert_dialogue("Failure", "Name taken.")
             fail_dialogue.exec()
             return
         
-        legal_dialogue = dialogues.sign_in_failure_dialogue("Profile Created", "Profile Successfully Created!")
+        legal_dialogue = dialogues.alert_dialogue("Profile Created", "Profile Successfully Created!")
         legal_dialogue.exec()
         self.dashboard_status.current_profile = taken
         self.dashboard_status.profile_change()
@@ -53,7 +53,7 @@ class profile_window(QWidget):
     def check_sign_in(self):
         user = database.fetch_profile(self.entered_username.text(), self.entered_password.text())
         if user == '/0':
-            fail_dialogue = dialogues.sign_in_failure_dialogue("Failure", "Username or password is incorrect.")
+            fail_dialogue = dialogues.alert_dialogue("Failure", "Username or password is incorrect.")
             fail_dialogue.exec()
             return
         self.dashboard_status.current_profile = user
