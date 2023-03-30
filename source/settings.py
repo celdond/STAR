@@ -3,7 +3,7 @@ import os
 
 def base_settings(path: str):
     config = configparser.ConfigParser()
-    config.add_section('user')
+    config.add_section('User')
 
     config['User']['Steam'] = '0'
     with open(path, 'w') as configfile:
