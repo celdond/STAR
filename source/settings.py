@@ -5,7 +5,7 @@ def base_settings(path: str):
     config = configparser.ConfigParser()
     config.add_section('user')
 
-    config['user']['steam'] = '0'
+    config['User']['Steam'] = '0'
     with open(path, 'w') as configfile:
         config.write(configfile)
     return
@@ -31,7 +31,7 @@ def load_window_settings(path: str)->list:
     config = configparser.ConfigParser()
     config_settings = os.path.join(path, "settings.ini")
     config.read(config_settings)
-    if config['user']['steam'] != '0':
+    if config['User']['Steam'] != '0':
         output.append('s')
     
     return output
