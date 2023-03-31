@@ -9,3 +9,6 @@ This project was coded on a local machine using Python 3.10.7 and the packages d
 pip install -r requirements.txt
 
 This project used a virtual environment.
+
+STAR operates using a GUI developed with PyQT, requiring any user to create a profile in the application to use all of its features.
+A profile does NOT need to have a password to be valid.
