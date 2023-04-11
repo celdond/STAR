@@ -18,6 +18,7 @@ class dashboard(QMainWindow):
     def __init__(self):
         super().__init__()
         self.current_profile = None
+        self.scraping = 0
         self.path = None
         self.setWindowTitle("Dashboard")
         self._generate_UI()

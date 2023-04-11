@@ -44,9 +44,9 @@ class random_page(QWidget):
         shuffle_list = list()
         if steam_state:
             steam_conn = database.check_setting(self.path, "user", "steam")
-            scrapers.steam_scrape( self.user_database, steam_conn)
+            scrapers.steam_scrape(self.user_database, steam_conn)
             shuffle_list.append('steam')
-        print(r_m.random_function(self.user_database, shuffle_list))
+        result = r_m.random_function(self.user_database, shuffle_list)
         return
 
 class steam_wishlist_page(QWidget):

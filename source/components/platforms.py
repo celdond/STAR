@@ -1,5 +1,6 @@
 import source.components.dialogues as dialogues
 import source.settings as settings
+import threading
 from PySide6.QtCore import (
     Qt,
 )
@@ -40,6 +41,10 @@ class platforms_window(QWidget):
         self.platform = s
         return
     
+    def platform_scrape(self):
+        self.dashboard_status.scraping = 0
+        return
+
     def add(self):
         if self.platform == "None":
             platform_dialogue = dialogues.alert_dialogue("Platform Unselected", "Please select a platform to add.")
@@ -55,5 +60,9 @@ class platforms_window(QWidget):
             platform_dialogue.exec()
             return
         settings.change_setting(self.dashboard_status.path, 'User', self.platform, self.entered_path.text())
+        if self.dashboard_status.scraping == 0:
+            self.dashboard_status.scraping = 1
+            scrape_thread = threading.Thread(target = self.platform_scrape)
+            scrape_thread.start()
         self.hide()
         return
