@@ -1,5 +1,5 @@
 import source.database as database
-import source.scripts.webscrapers as scrapers
+import source.components.dialogues as dialogues
 import threading
 import source.scripts.random_methods as r_m
 from PySide6.QtCore import (
@@ -43,10 +43,9 @@ class random_page(QWidget):
         steam_state = self.platforms.steam_check.isChecked()
         shuffle_list = list()
         if steam_state:
-            steam_conn = database.check_setting(self.path, "user", "steam")
-            scrapers.steam_scrape(self.user_database, steam_conn)
             shuffle_list.append('steam')
         result = r_m.random_function(self.user_database, shuffle_list)
+        dialogues.alert_dialogue("Selection", result)
         return
 
 class steam_wishlist_page(QWidget):

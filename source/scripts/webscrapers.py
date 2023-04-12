@@ -131,10 +131,11 @@ def gog_database_build():
     gog_database.close()
     return
 
-def steam_scrape(user_path: str, u: str):
+def steam_scrape(user_path: str, username: str, u: str):
     wishlist_data = json.loads(re.findall(r'g_strWishlistBaseURL = (".*?");', r.get(u).text)[0])
     
-    user_database = sql3.connect(user_path)
+    database_path = os.path.join(user_path, username + '.db')
+    user_database = sql3.connect(database_path)
     user_cursor = user_database.cursor()
     user_cursor.execute( " CREATE TABLE IF NOT EXISTS steam (app_id int PRIMARY KEY, name text(255), type text(255), price real); ")
 
