@@ -43,6 +43,7 @@ class platforms_window(QWidget):
     
     def platform_scrape(self):
         self.dashboard_status.scraping = 0
+        dialogues.alert_dialogue("Finished", "Webscraping complete.")
         return
 
     def add(self):
@@ -64,5 +65,7 @@ class platforms_window(QWidget):
             self.dashboard_status.scraping = 1
             scrape_thread = threading.Thread(target = self.platform_scrape)
             scrape_thread.start()
+        else:
+            dialogues.alert_dialogue("Occupied", "Application is currently performing a task, please wait for it to finish.")
         self.hide()
         return
