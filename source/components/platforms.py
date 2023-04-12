@@ -1,4 +1,5 @@
 import source.components.dialogues as dialogues
+import source.scripts.webscrapers as webscrapers
 import source.settings as settings
 import threading
 from PySide6.QtCore import (
@@ -42,6 +43,7 @@ class platforms_window(QWidget):
         return
     
     def platform_scrape(self):
+        webscrapers.steam_scrape(self.dashboard_status.path, self.entered_path)
         self.dashboard_status.scraping = 0
         dialogues.alert_dialogue("Finished", "Webscraping complete.")
         return
