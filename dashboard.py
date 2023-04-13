@@ -74,6 +74,7 @@ class dashboard(QMainWindow):
             self.tabs.addTab(profile_home, "Home")
             self.profile_menu.addAction(self.clear_profile)
             self.path = os.path.join(os.getcwd(), "profiles", self.current_profile)
+            self.database_path = os.path.join(self.path, self.current_profile + '.db')
 
         self.tabs.addTab(self.random, "Random")
 

@@ -44,8 +44,9 @@ class random_page(QWidget):
         shuffle_list = list()
         if steam_state:
             shuffle_list.append('steam')
-        result = r_m.random_function(self.user_database, shuffle_list)
-        dialogues.alert_dialogue("Selection", result)
+        result = r_m.random_function(self.dashboard_status.database_path, shuffle_list)
+        selection = dialogues.alert_dialogue("Selection", result[0])
+        selection.exec()
         return
 
 class steam_wishlist_page(QWidget):
