@@ -1,4 +1,5 @@
 import source.components.dialogues as dialogues
+import source.scripts.webscrapers as webscrapers
 import source.settings as settings
 from PySide6.QtCore import (
     Qt,
@@ -10,7 +11,6 @@ from PySide6.QtWidgets import (
     QGridLayout,
     QLineEdit,
     QCheckBox,
-    QLabel,
 )
 
 class platforms_window(QWidget):
@@ -40,6 +40,13 @@ class platforms_window(QWidget):
         self.platform = s
         return
     
+    def platform_scrape(self):
+        webscrapers.steam_scrape(self.dashboard_status.path, self.dashboard_status.current_profile, self.entered_path.text())
+        self.dashboard_status.scraping = 0
+        finished = dialogues.alert_dialogue("Finished", "Webscraping complete.")
+        finished.exec()
+        return
+
     def add(self):
         if self.platform == "None":
             platform_dialogue = dialogues.alert_dialogue("Platform Unselected", "Please select a platform to add.")
@@ -55,5 +62,6 @@ class platforms_window(QWidget):
             platform_dialogue.exec()
             return
         settings.change_setting(self.dashboard_status.path, 'User', self.platform, self.entered_path.text())
+        self.platform_scrape()
         self.hide()
         return
