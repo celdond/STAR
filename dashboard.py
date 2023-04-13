@@ -2,6 +2,7 @@ import sys
 import source.components.random_selection as random_selection
 import source.components.profile as profile
 import source.components.platforms as platforms
+import source.components.dialogues as dialogues
 import source.components.home as home
 import os
 from PySide6.QtGui import (
@@ -77,7 +78,6 @@ class dashboard(QMainWindow):
             self.database_path = os.path.join(self.path, self.current_profile + '.db')
 
         self.tabs.addTab(self.random, "Random")
-
         return
 
 def main():

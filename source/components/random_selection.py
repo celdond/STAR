@@ -1,6 +1,5 @@
 import source.database as database
 import source.components.dialogues as dialogues
-import threading
 import source.scripts.random_methods as r_m
 from PySide6.QtCore import (
     Qt,
@@ -8,10 +7,8 @@ from PySide6.QtCore import (
 )
 from PySide6.QtWidgets import (
     QPushButton,
-    QTabWidget,
     QWidget,
     QGridLayout,
-    QLineEdit,
     QCheckBox,
     QTableView,
 )
@@ -23,7 +20,7 @@ class random_page(QWidget):
         self.dashboard_status = dashboard_status
 
         rand_button = QPushButton("Random")
-        rand_button.clicked.connect(self.random_button_thread)
+        rand_button.clicked.connect(self.random_button)
 
         self.platforms = platform_selection()
 
@@ -34,18 +31,13 @@ class random_page(QWidget):
 
         self.setLayout(layout)
 
-    def random_button_thread(self):
-        button_thread = threading.Thread(target = self.random_button)
-        button_thread.start()
-        return
-
     def random_button(self):
         steam_state = self.platforms.steam_check.isChecked()
         shuffle_list = list()
         if steam_state:
             shuffle_list.append('steam')
         result = r_m.random_function(self.dashboard_status.database_path, shuffle_list)
-        selection = dialogues.alert_dialogue("Selection", result[0])
+        selection = dialogues.alert_dialogue('Result', result[0])
         selection.exec()
         return
 

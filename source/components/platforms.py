@@ -1,7 +1,6 @@
 import source.components.dialogues as dialogues
 import source.scripts.webscrapers as webscrapers
 import source.settings as settings
-import threading
 from PySide6.QtCore import (
     Qt,
 )
@@ -12,7 +11,6 @@ from PySide6.QtWidgets import (
     QGridLayout,
     QLineEdit,
     QCheckBox,
-    QLabel,
 )
 
 class platforms_window(QWidget):
@@ -64,11 +62,6 @@ class platforms_window(QWidget):
             platform_dialogue.exec()
             return
         settings.change_setting(self.dashboard_status.path, 'User', self.platform, self.entered_path.text())
-        if self.dashboard_status.scraping == 0:
-            self.dashboard_status.scraping = 1
-            scrape_thread = threading.Thread(target = self.platform_scrape)
-            scrape_thread.start()
-        else:
-            dialogues.alert_dialogue("Occupied", "Application is currently performing a task, please wait for it to finish.")
+        self.platform_scrape()
         self.hide()
         return
