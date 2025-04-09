@@ -5,8 +5,5 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="STAR.MainWindow"
         Title="STAR">
-        
-    <StackPanel>
-        <Button Name="Random" Click="Random_Select">Random</Button>
-    </StackPanel>
+    Welcome to Avalonia!
 </Window>
